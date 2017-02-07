@@ -1,2 +1,2 @@
 # DataCat
-Simple Mongodb Reports and Analytics
+Simple Mongodb Reports and Analytics.
