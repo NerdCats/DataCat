@@ -35,6 +35,7 @@ namespace DataCat
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
+            services.AddResponseCompression();
 
             var databaseConfig = Configuration.GetSection("Database");
             services.Configure<DatabaseOptions>(databaseConfig);
@@ -62,8 +63,8 @@ namespace DataCat
             loggerFactory.AddDebug();
 
             app.UseApplicationInsightsRequestTelemetry();
-
             app.UseApplicationInsightsExceptionTelemetry();
+            app.UseResponseCompression();
 
             app.UseMvc();
         }

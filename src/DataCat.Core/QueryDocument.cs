@@ -16,9 +16,9 @@
         public JObject project { get; set; }
 
         /// <summary>
-        /// Mongodb aggregation pipeline to aggregate data from a collection
+        /// Mongodb sort operator
         /// </summary>
-        public List<JObject> aggreagate { get; set; }
+        public JObject sort { get; set; }
 
         /// <summary>
         /// Mongodb skip variable to skip results
@@ -29,5 +29,10 @@
         /// mongodb limit variable to limit results
         /// </summary>
         public int limit { get; set; } = 20;
+
+        /// <summary>
+        /// Mongodb aggregation pipeline to aggregate data from a collection
+        /// </summary>
+        public List<JObject> aggreagate { get; set; }
     }
 }

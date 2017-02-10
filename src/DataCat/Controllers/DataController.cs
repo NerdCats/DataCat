@@ -25,11 +25,26 @@
             var dbcollection = this.dbContext.GetCollection(collectionName);
             var queryDocument = BsonDocument.Parse(querydocument.query.ToString());
 
-            var result = await dbcollection
+            var fluentQuery = dbcollection
                 .Find(queryDocument)
                 .Skip(querydocument.skip)
-                .Limit(querydocument.limit)
-                .ToListAsync();
+                .Limit(querydocument.limit);
+
+            if (querydocument.project != null)
+            {
+                var projectDocument = BsonDocument.Parse(querydocument.project.ToString());
+                fluentQuery = fluentQuery
+                    .Project(projectDocument);
+            }
+
+            if (querydocument.sort != null)
+            {
+                var sortDocument = BsonDocument.Parse(querydocument.sort.ToString());
+                fluentQuery = fluentQuery
+                    .Sort(sortDocument);
+            }
+
+            var result = await fluentQuery.ToListAsync();
 
             return Ok(result);
         }
