@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using DataCat.Lib.Settings;
+using DataCat.Core;
 
 namespace DataCat
 {
@@ -37,7 +38,16 @@ namespace DataCat
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
-            services.Configure<DatabaseOptions>(Configuration.GetSection("Database"));
+
+            var databaseConfig = Configuration.GetSection("Database");
+            services.Configure<DatabaseOptions>(databaseConfig);
+
+            // Initiate a dbContext      
+            services.AddSingleton<IDbContext, DbContext>((provider) =>
+            {
+                var dbContext = new DbContext(databaseConfig["ConnectionString"], databaseConfig["DatabaseName"]);
+                return dbContext;
+            });
 
             services.AddMvc();
         }

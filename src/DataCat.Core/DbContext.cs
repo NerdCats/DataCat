@@ -4,7 +4,7 @@
     using MongoDB.Driver;
     using System;
 
-    public class DbContext
+    public class DbContext: IDbContext
     {
         private MongoClient mongoClient;
         public IMongoDatabase Database { get; private set; }

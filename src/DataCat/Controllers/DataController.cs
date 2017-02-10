@@ -2,17 +2,15 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using Core;
-    using Microsoft.Extensions.Options;
-    using Lib.Settings;
 
     [Route("api")]
     public class DataController : Controller
     {
-        private IOptions<DatabaseOptions> databaseOptionsAccessor;
+        private IDbContext dbContext;
 
-        public DataController(IOptions<DatabaseOptions> databaseOptions)
+        public DataController(IDbContext dbContext)
         {
-            this.databaseOptionsAccessor = databaseOptions;
+            this.dbContext = dbContext;
         }
 
         [HttpPost("{collection}")]
