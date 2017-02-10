@@ -1,12 +1,12 @@
 import { Routes, RouterModule } from '@angular/router';
 
-import { HomeRoutes } from './home/index';
 import { LoginRoute } from './login/index';
+import { DashboardRoutes } from './dashboard/index';
 
 import { AuthGuard } from './auth/auth.guard';
 
 const securedRoutes: Routes = [
-    ...HomeRoutes,
+    ...DashboardRoutes
 ];
 
 for (let route of securedRoutes) {

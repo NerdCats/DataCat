@@ -6,7 +6,21 @@
   <as-sidebar></as-sidebar>
 
   <!-- Content Wrapper. Contains page content -->
-  <as-dashview></as-dashview>
+  <div class="content-wrapper" style="min-height: 799px;">
+    <!-- Content Header (Page header) -->
+    <as-dashview-header></as-dashview-header>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Your Page Content Here -->
+
+      <div style="padding: 10px 0px; text-align: center;">
+        <router-outlet></router-outlet>
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
   <!-- /.content-wrapper -->
 
   <!-- Main Footer -->

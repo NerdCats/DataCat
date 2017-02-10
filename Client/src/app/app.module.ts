@@ -5,8 +5,8 @@ import { HttpModule } from '@angular/http';
 import { APP_PROVIDERS } from './app.providers';
 import { AppComponent } from './app.component';
 import { appRoutingProviders, routing } from './app.routing';
-import { HomeModule } from './home/home.module';
 import { LoginModule } from './login/login.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
     declarations: [
@@ -15,7 +15,7 @@ import { LoginModule } from './login/login.module';
     imports: [
         BrowserModule,
         HttpModule,
-        HomeModule,
+        DashboardModule,
         LoginModule,
         routing
     ],
