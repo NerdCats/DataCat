@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
-
-namespace DataCat.Core
+﻿namespace DataCat.Core
 {
+    using System.Collections.Generic;
+    using Newtonsoft.Json.Linq;
+
     public class QueryDocument
     {
         /// <summary>
