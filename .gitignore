@@ -259,7 +259,7 @@ Client/node_modules
 Client/bower_components
 Client/build
 Client/report
-Client/src/tmp/typings
+Client/typings
 Client/src/tmp
 .DS_Store
 npm-debug.log
