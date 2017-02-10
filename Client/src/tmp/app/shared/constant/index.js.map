@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/shared/constant/index.ts"],"names":[],"mappings":";AAAA,+BAA8B;AAC9B,6BAA4B;AAEf,QAAA,SAAS,GAAG;IACrB,IAAI,aAAA;IACJ,GAAG,WAAA;CACN,CAAC","file":"index.js","sourcesContent":["import { MAIN } from './main';\r\nimport { ENV } from './env';\r\n\r\nexport const CONSTANTS = {\r\n    MAIN,\r\n    ENV\r\n};\r\n"]}

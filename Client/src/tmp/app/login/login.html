@@ -1,0 +1,54 @@
+<!-- template -->
+<div class="login-box">
+    <div class="login-logo">
+        <!-- TODO:// We need make sure app name is loaded through settings -->
+        <b>{{appTitle}}</b>
+        Login
+    </div>
+    <div class="login-box-body">
+        <p class='login-box-msg'> {{error || "Sign in to start your session"}}</p>
+        <!-- On form submit, we call the Login event with the username and the password from the inputs -->
+        <form name="form" #loginForm="ngForm">
+            <fieldset>
+                <div class="form-group">
+                    <input  class="form-control"
+                    [(ngModel)]="model.username"
+                    name = "username"
+                    required
+                    placeholder="Username"
+                    type="text"
+                    #name="ngModel"
+                    autofocus maxlength="20">
+                    <div class="control-msgs" [hidden] = "name.valid || name.pristine">
+                        <p>Username is required.</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input
+                    class="form-control"
+                    [(ngModel)]="model.password"
+                    required
+                    placeholder="Password"
+                    type="password"
+                    name="password"
+                    #password="ngModel"
+                    maxlength="20">
+                    <div class="control-msgs" [hidden] = "password.valid || password.pristine">
+                        <p>Password is required.</p>
+                    </div>
+                </div>
+                <button type="submit" (click)="login()" [disabled]="!loginForm.form.valid || loading" class="btn btn-lg btn-success btn-block">
+                    Login
+                    <span class="fa fa-circle-o-notch fa-spin fa-lg fa-fw" [hidden]="!loading"></span>
+                </button>
+
+            </fieldset>
+        </form>
+
+        <!--TODO: Need to make sure this are live someday-->
+        <!--<a href="#">I forgot my password</a><br>
+        <a class="text-center">Register a new membership</a>-->
+
+    </div>
+    <!-- /.login-box-body -->
+</div>

@@ -1,0 +1,5 @@
+<div *ngIf="props" [style.background-color]="props.background" [style.width]="props.size" [style.line-height]='props.lineheight'
+    [style.height]='props.size' [style.font-size]='props.fontSize' [style.border]='props.border' [style.border-radius]='props.borderradius'
+    [style.text-align]="props.textalign">
+    <div [style.color]='fontColor'>{{props.letter}}</div>
+</div>

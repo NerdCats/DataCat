@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/login/login.routes.ts"],"names":[],"mappings":";AAAA,qDAAmD;AAEtC,QAAA,UAAU,GAAG,EAAE,IAAI,EAAE,OAAO,EAAE,SAAS,EAAE,gCAAc,EAAE,CAAC","file":"login.routes.js","sourcesContent":["import { LoginComponent } from './login.component';\r\n\r\nexport const LoginRoute = { path: 'login', component: LoginComponent };\r\n"]}

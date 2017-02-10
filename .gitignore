@@ -250,3 +250,18 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+# Angular2 clients
+env.json
+.idea/
+.vscode
+/node_modules
+/bower_components
+/build
+/report
+/typings
+/src/tmp
+.DS_Store
+npm-debug.log
+app/**/*.js
+app/**/*.js.map

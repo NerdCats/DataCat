@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/footer/index.ts"],"names":[],"mappings":";;;;AAAA,wCAAmC","file":"index.js","sourcesContent":["export * from './footer.component';\r\n"]}
