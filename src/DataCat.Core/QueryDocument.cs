@@ -19,5 +19,15 @@
         /// Mongodb aggregation pipeline to aggregate data from a collection
         /// </summary>
         public List<JObject> aggreagate { get; set; }
+
+        /// <summary>
+        /// Mongodb skip variable to skip results
+        /// </summary>
+        public int skip { get; set; } = 0;
+
+        /// <summary>
+        /// mongodb limit variable to limit results
+        /// </summary>
+        public int limit { get; set; } = 20;
     }
 }

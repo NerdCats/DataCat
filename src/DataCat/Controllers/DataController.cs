@@ -25,7 +25,12 @@
             var dbcollection = this.dbContext.GetCollection(collectionName);
             var queryDocument = BsonDocument.Parse(querydocument.query.ToString());
 
-            var result = await dbcollection.Find(queryDocument).FirstOrDefaultAsync();
+            var result = await dbcollection
+                .Find(queryDocument)
+                .Skip(querydocument.skip)
+                .Limit(querydocument.limit)
+                .ToListAsync();
+
             return Ok(result);
         }
     }
