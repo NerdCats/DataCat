@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using DataCat.Lib.Settings;
 
 namespace DataCat
 {
@@ -36,6 +37,7 @@ namespace DataCat
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
+            services.Configure<DatabaseOptions>(Configuration.GetSection("Database"));
 
             services.AddMvc();
         }

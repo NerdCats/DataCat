@@ -1,17 +1,18 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using DataCat.Core;
-
-namespace DataCat.Controllers
+﻿namespace DataCat.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Core;
+    using Microsoft.Extensions.Options;
+    using Lib.Settings;
+
     [Route("api")]
     public class DataController : Controller
     {
-        // GET api/values
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private IOptions<DatabaseOptions> databaseOptionsAccessor;
+
+        public DataController(IOptions<DatabaseOptions> databaseOptions)
         {
-            return new string[] { "value1", "this is nice" };
+            this.databaseOptionsAccessor = databaseOptions;
         }
 
         [HttpPost("{collection}")]
