@@ -6,6 +6,9 @@ import { RouterModule } from '@angular/router';
 import { NavbarModule } from '../navbar/index';
 import { LetterAvatarModule } from '../shared/letter-avatar/index';
 
+
+import { DASHBOARD_PROVIDERS } from './dashboard-event.service';
+
 // Local Components
 import { DashboardComponent } from './index';
 import { SidebarComponent } from '../sidebar/index';
@@ -30,7 +33,8 @@ import { GlimpseComponent } from '../glimpse/index';
         CommonModule,
         NavbarModule,
         LetterAvatarModule
-    ]
+    ],
+    providers: [...DASHBOARD_PROVIDERS]
 })
 export class DashboardModule {
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DashboardEventService } from '../dashboard/dashboard-event.service';
 
 @Component({
     moduleId: module.id,
@@ -15,4 +16,10 @@ export class DashviewHeaderComponent {
      * it so we know which one is active here
      */
     public breadcrumbDef: string[];
+
+    constructor(private dashboardEventService: DashboardEventService) {
+        this.dashboardEventService.componentUpdated$.subscribe(event => {
+            this.pageHeader = event.Name;
+        });
+    }
 }
