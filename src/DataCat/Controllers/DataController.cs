@@ -21,14 +21,13 @@
         {
             if (string.IsNullOrWhiteSpace(collectionName))
                 return BadRequest();
-            
+
             var dbcollection = this.dbContext.GetCollection(collectionName);
             var queryDocument = BsonDocument.Parse(querydocument.query.ToString());
 
             var fluentQuery = dbcollection
-                .Find(queryDocument)
-                .Skip(querydocument.skip)
-                .Limit(querydocument.limit);
+                .Find(queryDocument);
+
 
             if (querydocument.project != null)
             {
@@ -44,7 +43,10 @@
                     .Sort(sortDocument);
             }
 
-            var result = await fluentQuery.ToListAsync();
+            var result = await fluentQuery
+                .Skip(querydocument.skip)
+                .Limit(querydocument.limit)
+                .ToListAsync();
 
             return Ok(result);
         }
