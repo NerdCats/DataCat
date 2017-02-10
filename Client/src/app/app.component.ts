@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { CONSTANTS } from './shared';
 
@@ -10,7 +11,8 @@ import { CONSTANTS } from './shared';
 export class AppComponent {
     public appBrand: string;
 
-    constructor() {
+    constructor(private titleService: Title) {
         this.appBrand = CONSTANTS.MAIN.APP.BRAND;
+        this.titleService.setTitle(this.appBrand);
     }
 }
