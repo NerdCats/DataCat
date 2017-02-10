@@ -20,6 +20,7 @@ export class DashviewHeaderComponent {
     constructor(private dashboardEventService: DashboardEventService) {
         this.dashboardEventService.componentUpdated$.subscribe(event => {
             this.pageHeader = event.Name;
+            this.breadcrumbDef = [event.Name];
         });
     }
 }
