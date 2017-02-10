@@ -13,3 +13,7 @@ export class DashboardEventService {
         this.componentUpdateSource.next(value);
     }
 }
+
+export const DASHBOARD_PROVIDERS: any[] = [
+    { provide: DashboardEventService, useClass: DashboardEventService }
+];
