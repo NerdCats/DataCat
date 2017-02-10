@@ -31,6 +31,14 @@
         },
         'angular2-letter-avatar': {
             defaultExtension: 'js'
+        },
+        'chart.js': {
+            main: 'dist/Chart.js',
+            defaultExtension: 'js'
+        },
+        'ng2-charts': {
+            main: 'ng2-charts.js',
+            defaultExtension: 'js'
         }
     };
 
@@ -40,14 +48,15 @@
         'rxjs',
         'lodash',
         'angular2-jwt',
-        'angular2-letter-avatar'
+        'angular2-letter-avatar',
+        'chart.js',
+        'ng2-charts'
     ];
 
     // Add package entries for packages that expose barrels using index.js
     var packageNames = [
         // App barrels
         'app/shared',
-
         // 3rd party barrels
         'lodash'
     ];

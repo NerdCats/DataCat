@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { ChartsModule } from 'ng2-charts';
 
 // Local Modules
 import { NavbarModule } from '../navbar/index';
@@ -32,7 +33,8 @@ import { GlimpseComponent } from '../glimpse/index';
         RouterModule,
         CommonModule,
         NavbarModule,
-        LetterAvatarModule
+        LetterAvatarModule,
+        ChartsModule
     ],
     providers: [...DASHBOARD_PROVIDERS]
 })
