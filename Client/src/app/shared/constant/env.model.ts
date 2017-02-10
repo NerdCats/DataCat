@@ -9,4 +9,5 @@
 
 export interface AppEnv {
     API_BASE?: string;
+    AUTH_BASE?: string;
 }

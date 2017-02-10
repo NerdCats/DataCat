@@ -23,7 +23,7 @@ export class AuthService {
 
     login(username: string, password: string) {
         let headers = new Headers();
-        let tokenUrl = CONSTANTS.ENV.API_BASE + 'auth/token'; // TODO: Need to definitely load from settings
+        let tokenUrl = CONSTANTS.ENV.AUTH_BASE + 'auth/token'; // TODO: Need to definitely load from settings
 
         let urlEncodedParam =
             'grant_type=' + 'password' +
@@ -65,18 +65,6 @@ export class AuthService {
         }
         try {
             let userData = this.jwtHelper.decodeToken(data.access_token);
-            /**
-             * Making sure the user is allowed to get in. Currently this dashboard
-             * is only for enterprise users. This would essentially be extended
-             * so the components our aware of User types and can act accordingly.
-             **/
-            let roleString: String = userData.role;
-
-            // TODO: Make sure we send out a nice message otherwise
-            if (roleString.indexOf('Enterprise') === -1) {
-                return false;
-            }
-
             data.userData = userData;
             this.localStorage.setObject(AuthConstants.AUTH_TOKEN_KEY, data);
         } catch (ex) {

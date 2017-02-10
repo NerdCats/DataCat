@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/auth/auth.constants.ts"],"names":[],"mappings":";AAAA;IAAA;IAEA,CAAC;IAAD,oBAAC;AAAD,CAFA,AAEC;AADiB,4BAAc,GAAW,aAAa,CAAC;AAD5C,sCAAa;AAEzB,CAAC","file":"auth.constants.js","sourcesContent":["export class AuthConstants {\r\n    public static AUTH_TOKEN_KEY: string = 'currentUser';\r\n};\r\n"]}
