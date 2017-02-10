@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using DataCat.Lib.Settings;
 using DataCat.Core;
+using DataCat.Core.Converters;
 
 namespace DataCat
 {
@@ -49,7 +46,13 @@ namespace DataCat
                 return dbContext;
             });
 
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(options => 
+                {
+                    options.SerializerSettings.Converters.Add(new BsonDocumentConverter());
+                    options.SerializerSettings.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat;
+                    options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline

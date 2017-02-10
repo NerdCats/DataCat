@@ -26,17 +26,7 @@
             var queryDocument = BsonDocument.Parse(querydocument.query.ToString());
 
             var result = await dbcollection.Find(queryDocument).FirstOrDefaultAsync();
-            var jsonResult = result.ToJson(new MongoDB.Bson.IO.JsonWriterSettings() {
-                OutputMode = MongoDB.Bson.IO.JsonOutputMode.Strict,
-                Indent = true,
-                GuidRepresentation = GuidRepresentation.CSharpLegacy
-            });
-            return new ContentResult()
-            {
-                Content = jsonResult,
-                StatusCode= 200,
-                ContentType = "application/json"
-            };
+            return Ok(result);
         }
     }
 }
