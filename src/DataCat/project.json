@@ -1,4 +1,4 @@
-﻿{
+{
   "dependencies": {
     "Microsoft.NETCore.App": {
       "version": "1.0.1",
@@ -17,6 +17,7 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "Microsoft.Extensions.Configuration.CommandLine": "1.0.0",
+    "MongoDB.Driver": "2.4.2",
     "DataCat.Core": "1.0.0-*"
   },
 
