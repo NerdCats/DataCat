@@ -47,6 +47,8 @@ namespace DataCat
                 return dbContext;
             });
 
+            services.AddSingleton<IDataService, DataService>();
+
             services.AddMvc()
                 .AddJsonOptions(options => 
                 {

@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Core;
     using System.Threading.Tasks;
+    using System.Reflection;
 
     [Route("api")]
     public class DataController : Controller
@@ -12,6 +13,16 @@
         public DataController(IDataService dataService)
         {
             this.dataService = dataService;
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok("DataCat " + typeof(Startup)
+                .GetTypeInfo()
+                .Assembly
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                .InformationalVersion);
         }
 
         [HttpPost("{collectionName}/q")]
