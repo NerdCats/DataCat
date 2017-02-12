@@ -31,6 +31,9 @@
             if (string.IsNullOrWhiteSpace(collectionName))
                 return BadRequest();
 
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var result = await dataService.ExecuteAsync(collectionName, queryDocument);
 
             return Ok(result);
@@ -42,6 +45,9 @@
         {
             if (string.IsNullOrWhiteSpace(collectionName))
                 return BadRequest();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
             var result = await dataService.ExecuteAsync(collectionName, aggDocument);
             return Ok(result);

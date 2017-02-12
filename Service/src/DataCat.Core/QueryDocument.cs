@@ -1,5 +1,6 @@
 ﻿namespace DataCat.Core
 {
+    using System.ComponentModel.DataAnnotations;
     using Newtonsoft.Json.Linq;
 
     public class QueryDocument
@@ -7,6 +8,8 @@
         /// <summary>
         /// Mongodb query object to query data from collection
         /// </summary>
+        /// 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Invalid/null query specification")]
         public JObject query { get; set; }
 
         /// <summary>
