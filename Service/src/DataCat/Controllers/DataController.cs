@@ -2,8 +2,6 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using Core;
-    using MongoDB.Driver;
-    using MongoDB.Bson;
     using System.Threading.Tasks;
 
     [Route("api")]
@@ -22,16 +20,20 @@
             if (string.IsNullOrWhiteSpace(collectionName))
                 return BadRequest();
 
-            var result = await dataService.Execute(collectionName, queryDocument);
+            var result = await dataService.ExecuteAsync(collectionName, queryDocument);
 
             return Ok(result);
         }
 
         [HttpPost("{collectionName}/a")]
         [HttpPost]
-        public IActionResult PostAggregation(string collectionName, [FromBody] QueryDocument querydocument)
+        public async Task<IActionResult> PostAggregation(string collectionName, [FromBody] AggregateDocument aggDocument)
         {
-            return Ok();
+            if (string.IsNullOrWhiteSpace(collectionName))
+                return BadRequest();
+
+            var result = await dataService.ExecuteAsync(collectionName, aggDocument);
+            return Ok(result);
         }
     }
 }

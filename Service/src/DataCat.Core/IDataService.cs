@@ -6,7 +6,7 @@ namespace DataCat.Core
 {
     public interface IDataService
     {
-        Task<List<BsonDocument>> Execute(string collectionName, QueryDocument document);
-        Task<List<BsonDocument>> Execute(string collectionName, AggregateDocument document);
+        Task<List<BsonDocument>> ExecuteAsync(string collectionName, QueryDocument document);
+        Task<List<BsonDocument>> ExecuteAsync(string collectionName, AggregateDocument document);
     }
 }

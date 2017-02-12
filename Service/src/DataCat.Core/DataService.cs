@@ -3,9 +3,10 @@
     using MongoDB.Bson;
     using MongoDB.Driver;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
-    public class DataService
+    public class DataService : IDataService
     {
         private IDbContext dbContext;
 
@@ -14,12 +15,12 @@
             this.dbContext = context;
         }
 
-        public async Task<List<BsonDocument>> Execute(string collectionName, QueryDocument document)
+        public async Task<List<BsonDocument>> ExecuteAsync(string collectionName, QueryDocument document)
         {
-            var dbcollection = this.dbContext.GetCollection(collectionName);
+            var collection = this.dbContext.GetCollection(collectionName);
             var queryDocument = BsonDocument.Parse(document.query.ToString());
 
-            var fluentQuery = dbcollection
+            var fluentQuery = collection
                 .Find(queryDocument);
 
             if (document.project != null)
@@ -44,9 +45,21 @@
             return result;
         }
 
-        public async Task<List<BsonDocument>> Execute(string collectionName, AggregateDocument document)
+        public async Task<List<BsonDocument>> ExecuteAsync(string collectionName, AggregateDocument document)
         {
-            return null;
+            var collection = this.dbContext.GetCollection(collectionName);
+
+            // TODO: May be we need a smart way to expose aggregation options? May be?
+
+            var aggPipeline = document.aggreagate
+                .Select(x => BsonDocument.Parse(x.ToString()))
+                .ToArray();
+
+            var result = await collection
+                .Aggregate<BsonDocument>(aggPipeline)
+                .ToListAsync();
+
+            return result;
         }
     }
 }
