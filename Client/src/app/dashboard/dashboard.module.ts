@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
+import { HttpModule } from '@angular/http';
 
 // Local Modules
 import { NavbarModule } from '../navbar/index';
 import { LetterAvatarModule } from '../shared/letter-avatar/index';
+import { DataModule } from '../data/index';
 
 
 import { DASHBOARD_PROVIDERS } from './dashboard-event.service';
@@ -34,7 +36,9 @@ import { GlimpseComponent } from '../glimpse/index';
         CommonModule,
         NavbarModule,
         LetterAvatarModule,
-        ChartsModule
+        ChartsModule,
+        HttpModule,
+        DataModule
     ],
     providers: [...DASHBOARD_PROVIDERS]
 })
