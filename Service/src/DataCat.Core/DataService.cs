@@ -51,7 +51,7 @@
 
             // TODO: May be we need a smart way to expose aggregation options? May be?
 
-            var aggPipeline = document.aggreagate
+            var aggPipeline = document.aggregate
                 .Select(x => BsonDocument.Parse(x.ToString()))
                 .ToArray();
 

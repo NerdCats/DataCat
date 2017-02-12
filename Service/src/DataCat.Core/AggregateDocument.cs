@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace DataCat.Core
+﻿namespace DataCat.Core
 {
+    using Newtonsoft.Json.Linq;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
     public class AggregateDocument
     {
         /// <summary>
@@ -11,6 +11,6 @@ namespace DataCat.Core
         /// </summary>
         ///  
         [Required(AllowEmptyStrings = false, ErrorMessage = "Invalid/null aggregate specification")]
-        public List<JObject> aggreagate { get; set; }
+        public List<JObject> aggregate { get; set; }
     }
 }
