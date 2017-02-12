@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
@@ -17,6 +17,9 @@ export class DataService {
 
     executeAggregation(collectionName: string, aggregateDocument: any) {
         let aggUrl = CONSTANTS.ENV.API_BASE + collectionName + '/a';
+
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
 
         return this.http.post(aggUrl, aggregateDocument)
             .map((res: Response) => {
