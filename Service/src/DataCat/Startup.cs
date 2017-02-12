@@ -35,6 +35,7 @@ namespace DataCat
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
+            services.AddCors();
             services.AddResponseCompression();
 
             var databaseConfig = Configuration.GetSection("Database");
@@ -50,7 +51,7 @@ namespace DataCat
             services.AddSingleton<IDataService, DataService>();
 
             services.AddMvc()
-                .AddJsonOptions(options => 
+                .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.Converters.Add(new BsonDocumentConverter());
                     options.SerializerSettings.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat;
@@ -64,9 +65,21 @@ namespace DataCat
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
             app.UseApplicationInsightsRequestTelemetry();
             app.UseApplicationInsightsExceptionTelemetry();
             app.UseResponseCompression();
+
+
 
             app.UseMvc();
         }

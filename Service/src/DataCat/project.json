@@ -19,7 +19,8 @@
     "Microsoft.Extensions.Configuration.CommandLine": "1.0.0",
     "MongoDB.Driver": "2.4.2",
     "DataCat.Core": "1.0.0-*",
-    "Microsoft.AspNetCore.ResponseCompression": "1.0.0"
+    "Microsoft.AspNetCore.ResponseCompression": "1.0.0",
+    "Microsoft.AspNetCore.Diagnostics": "1.0.0"
   },
 
   "tools": {

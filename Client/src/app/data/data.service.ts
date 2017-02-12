@@ -35,7 +35,7 @@ export class DataService {
 
     private _extractAndSaveData(res: Response) {
         let body = res.json();
-        return body.data || {};
+        return body || {};
     }
 
     private _extractError(error: Response | any) {

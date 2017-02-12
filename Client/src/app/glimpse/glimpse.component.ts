@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DashboardEventService } from '../dashboard/dashboard-event.service';
 import { DataService } from '../data/index';
 import { LoggerService } from '../shared/index';
@@ -8,24 +8,38 @@ import { LoggerService } from '../shared/index';
     selector: 'as-glimpse',
     templateUrl: 'glimpse.html'
 })
-export class GlimpseComponent {
+export class GlimpseComponent implements OnInit {
     public barChartOptions: any = {
         scaleShowVerticalLines: false,
-        responsive: true
+        responsive: true,
+        scales: {
+            yAxes: [{
+                display: true,
+                ticks: {
+                    suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                    // OR //
+                    beginAtZero: true,   // minimum value will be 0.
+                    suggestedMax: 100,
+                    max: 150
+                }
+            }]
+        }
     };
 
-    public barChartLabels: string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+    public isDataAvailable: boolean = false;
+    public barChartLabels: string[] = [];
     public barChartType: string = 'bar';
     public barChartLegend: boolean = true;
+    public barChartData: any[];
 
-    public barChartData: any[] = [
-        { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-        { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
-    ];
     constructor(
         private dataService: DataService,
         private loggerService: LoggerService,
         private dashboarEventService: DashboardEventService) {
+        dashboarEventService.componentUpdated({ Event: 'loaded', Name: 'Glimpse' });
+    }
+
+    ngOnInit() {
         let document: any = {
             'aggregate': [
                 { '$sort': { 'CreateTime': -1 } },
@@ -111,12 +125,18 @@ export class GlimpseComponent {
 
         this.dataService.executeAggregation('Jobs', document)
             .subscribe(result => {
+                let jobCountArray: any[] = [];
                 if (result) {
-                    this.loggerService.log(result);
+                    // Need to parse this crap here
+                    let res: any[] = result;
+                    for (let entry of res) {
+                        this.barChartLabels.push(new Date(entry._id.CreateDate.$date).toDateString());
+                        jobCountArray.push(entry.count);
+                    }
                 }
-             },
+                this.barChartData = [{data: jobCountArray, label: 'Orders'}];
+                this.isDataAvailable = true;
+            },
             error => { this.loggerService.error(error); });
-
-        dashboarEventService.componentUpdated({ Event: 'loaded', Name: 'Glimpse' });
     }
 }
