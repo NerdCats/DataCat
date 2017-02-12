@@ -55,8 +55,15 @@
                 .Select(x => BsonDocument.Parse(x.ToString()))
                 .ToArray();
 
-            var result = await collection
-                .Aggregate<BsonDocument>(aggPipeline)
+            var aggregateFluent = collection.Aggregate();
+            foreach (var stage in aggPipeline)
+            {
+                aggregateFluent = aggregateFluent.AppendStage<BsonDocument>(stage);
+            }
+
+            var result = await aggregateFluent
+                .Skip(document.skip)
+                .Limit(document.limit)
                 .ToListAsync();
 
             return result;
