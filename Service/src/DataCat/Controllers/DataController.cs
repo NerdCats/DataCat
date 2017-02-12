@@ -9,46 +9,29 @@
     [Route("api")]
     public class DataController : Controller
     {
-        private IDbContext dbContext;
+        private IDataService dataService;
 
-        public DataController(IDbContext dbContext)
+        public DataController(IDataService dataService)
         {
-            this.dbContext = dbContext;
+            this.dataService = dataService;
         }
 
-        [HttpPost("{collectionName}")]
-        public async Task<IActionResult> Post(string collectionName, [FromBody] QueryDocument querydocument)
+        [HttpPost("{collectionName}/q")]
+        public async Task<IActionResult> PostQuery(string collectionName, [FromBody] QueryDocument queryDocument)
         {
             if (string.IsNullOrWhiteSpace(collectionName))
                 return BadRequest();
 
-            var dbcollection = this.dbContext.GetCollection(collectionName);
-            var queryDocument = BsonDocument.Parse(querydocument.query.ToString());
-
-            var fluentQuery = dbcollection
-                .Find(queryDocument);
-
-
-            if (querydocument.project != null)
-            {
-                var projectDocument = BsonDocument.Parse(querydocument.project.ToString());
-                fluentQuery = fluentQuery
-                    .Project(projectDocument);
-            }
-
-            if (querydocument.sort != null)
-            {
-                var sortDocument = BsonDocument.Parse(querydocument.sort.ToString());
-                fluentQuery = fluentQuery
-                    .Sort(sortDocument);
-            }
-
-            var result = await fluentQuery
-                .Skip(querydocument.skip)
-                .Limit(querydocument.limit)
-                .ToListAsync();
+            var result = await dataService.Execute(collectionName, queryDocument);
 
             return Ok(result);
+        }
+
+        [HttpPost("{collectionName}/a")]
+        [HttpPost]
+        public IActionResult PostAggregation(string collectionName, [FromBody] QueryDocument querydocument)
+        {
+            return Ok();
         }
     }
 }

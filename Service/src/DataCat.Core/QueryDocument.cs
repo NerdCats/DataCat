@@ -1,6 +1,5 @@
 ﻿namespace DataCat.Core
 {
-    using System.Collections.Generic;
     using Newtonsoft.Json.Linq;
 
     public class QueryDocument
@@ -29,10 +28,5 @@
         /// mongodb limit variable to limit results
         /// </summary>
         public int limit { get; set; } = 20;
-
-        /// <summary>
-        /// Mongodb aggregation pipeline to aggregate data from a collection
-        /// </summary>
-        public List<JObject> aggreagate { get; set; }
     }
 }
