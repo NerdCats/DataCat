@@ -1,2 +1,0 @@
-This is a folder where we keep unused examples for html files and templates.
-Keeping the file name same is important so we know where it belongs.
