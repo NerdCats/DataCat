@@ -1,4 +1,4 @@
-﻿namespace DataCat.Lib.Settings
+﻿namespace DataCat.Microservice.Core.Options
 {
     public class DatabaseOptions
     {

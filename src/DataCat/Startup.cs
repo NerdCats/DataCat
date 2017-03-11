@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using DataCat.Lib.Settings;
 using DataCat.Core;
 using DataCat.Core.Converters;
+using DataCat.Microservice.Core.Options;
 
 namespace DataCat
 {
@@ -78,8 +78,6 @@ namespace DataCat
             app.UseApplicationInsightsRequestTelemetry();
             app.UseApplicationInsightsExceptionTelemetry();
             app.UseResponseCompression();
-
-
 
             app.UseMvc();
         }
