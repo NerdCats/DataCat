@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-
-namespace DataCat
+﻿namespace DataCat
 {
+    using System.IO;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Builder;
+    using Microservice.Core;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -19,14 +15,7 @@ namespace DataCat
              *  definitely nice here.
              * */
 
-            var host = new WebHostBuilder()
-                .UseSetting("applicationName", "DataCat")
-                .CaptureStartupErrors(true)
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseStartup<Startup>()
-                .Build();
-
+            var host = MicroServiceHost.CreateHost<Startup>("DataCat");
             host.Run();
         }
     }
