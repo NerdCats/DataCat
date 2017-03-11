@@ -2,7 +2,7 @@
 {
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Builder;
-    using Microservice.Core;
+    using DataCat.Microservice.Core;
 
     public class Program
     {
@@ -13,7 +13,7 @@
              *  where we would want to host DataCat. Having a setting would be 
              *  definitely nice here.
              * */
-
+             
             var host = MicroServiceHost.CreateHost<Startup>("DataCat", "http://*:5000", args);
             host.Run();
         }

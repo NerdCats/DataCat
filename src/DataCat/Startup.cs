@@ -75,8 +75,6 @@ namespace DataCat
                 .AllowAnyMethod()
                 .AllowAnyHeader());
 
-            app.UseApplicationInsightsRequestTelemetry();
-            app.UseApplicationInsightsExceptionTelemetry();
             app.UseResponseCompression();
 
             app.UseMvc();

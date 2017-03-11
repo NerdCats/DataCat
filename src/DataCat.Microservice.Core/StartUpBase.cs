@@ -60,8 +60,6 @@
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseApplicationInsightsRequestTelemetry();
-            app.UseApplicationInsightsExceptionTelemetry();
             app.UseResponseCompression();
 
             app.UseMvc();

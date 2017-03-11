@@ -1,22 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F4463152-2963-4983-9C06-C4433E951AC0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{599B9A0E-034B-4E23-9BB7-B20999E6FBD2}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DataCat", "src\DataCat\DataCat.xproj", "{1A93A4B1-D64A-453B-8AB1-489A3E554CA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCat", "src\DataCat\DataCat.csproj", "{1A93A4B1-D64A-453B-8AB1-489A3E554CA0}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DataCat.Core", "src\DataCat.Core\DataCat.Core.xproj", "{8A7FA856-DCF3-4F87-AAA9-4080B875908E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCat.Core", "src\DataCat.Core\DataCat.Core.csproj", "{8A7FA856-DCF3-4F87-AAA9-4080B875908E}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DataCat.Auth", "src\DataCat.Auth\DataCat.Auth.xproj", "{906598D6-1EF0-4CDF-83C4-B754886FBC82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCat.Auth", "src\DataCat.Auth\DataCat.Auth.csproj", "{906598D6-1EF0-4CDF-83C4-B754886FBC82}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DataCat.Microservice.Core", "src\DataCat.Microservice.Core\DataCat.Microservice.Core.xproj", "{EC06D0E6-6494-4B4D-9D0F-63ADBB6017DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCat.Microservice.Core", "src\DataCat.Microservice.Core\DataCat.Microservice.Core.csproj", "{EC06D0E6-6494-4B4D-9D0F-63ADBB6017DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
