@@ -19,7 +19,7 @@
     "DataCat": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:5000/api",
+      "launchUrl": "http://localhost:5000/api/data",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

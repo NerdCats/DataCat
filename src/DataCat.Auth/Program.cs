@@ -15,7 +15,7 @@
              *  module to be used with it.
              **/
 
-            var host = MicroServiceHost.CreateHost<Startup>("DataCat.Auth");
+            var host = MicroServiceHost.CreateHost<Startup>("DataCat.Auth", "http://*:5500", args);
             host.Run();
         }
     }

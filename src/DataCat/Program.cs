@@ -1,6 +1,5 @@
 ﻿namespace DataCat
 {
-    using System.IO;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Builder;
     using Microservice.Core;
@@ -15,7 +14,7 @@
              *  definitely nice here.
              * */
 
-            var host = MicroServiceHost.CreateHost<Startup>("DataCat");
+            var host = MicroServiceHost.CreateHost<Startup>("DataCat", "http://*:5000", args);
             host.Run();
         }
     }
