@@ -32,7 +32,6 @@ namespace DataCat.Auth
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddApplicationInsightsTelemetry(Configuration);
             services.AddCors();
             services.AddResponseCompression();
 
