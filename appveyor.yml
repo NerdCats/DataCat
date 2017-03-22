@@ -12,5 +12,7 @@ before_build:
 - appveyor-retry dotnet restore 
 build_script:
 - dotnet publish -c release -r win10-x64
+after_build:
+- xcopy src\DataCat\appsettings.json src\DataCat\bin\Release\netcoreapp1.1\win10-x64\ /y 
 artifacts:
-- path: artifacts\**\*.*
+- path: src\DataCat\bin\Release\netcoreapp1.1\win10-x64\**\*.*
