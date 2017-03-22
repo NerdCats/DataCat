@@ -16,3 +16,4 @@ after_build:
 - xcopy src\DataCat\appsettings.json src\DataCat\bin\Release\netcoreapp1.1\win10-x64\ /y 
 artifacts:
 - path: src\DataCat\bin\Release\netcoreapp1.1\win10-x64
+- name: datacat
