@@ -15,6 +15,17 @@
             this.dataService = dataService;
         }
 
+
+        [HttpGet]
+        public IActionResult Get_ClientWiseDeliveryAttemptWiseAvgDeliveryTimeReport()
+        {
+            return Ok("DataCat " + typeof(Startup)
+                .GetTypeInfo()
+                .Assembly
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                .InformationalVersion);
+        }
+
         [HttpGet]
         public IActionResult Get()
         {
