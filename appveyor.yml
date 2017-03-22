@@ -18,3 +18,8 @@ artifacts:
 - path: src\DataCat\bin\Release\netcoreapp1.1\win10-x64\publish
   name: datacat
   type: zip
+deploy:
+- provider: Environment
+  name: TaskCatDev
+  on:
+    branch: TaskCatDev
