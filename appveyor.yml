@@ -1,7 +1,6 @@
 version: '1.0.{build}'
 image: Visual Studio 2017
 configuration:
-- Debug
 - Release
 platform: Any CPU
 environment:
@@ -12,6 +11,6 @@ init:
 before_build:
 - appveyor-retry dotnet restore 
 build_script:
-- dotnet build -r win10-x64
+- dotnet publish -c release -r win10-x64
 artifacts:
 - path: artifacts\**\*.*
