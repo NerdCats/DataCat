@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F4463152-2963-4983-9C06-C4433E951AC0}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCat", "src\DataCat\DataCat.csproj", "{1A93A4B1-D64A-453B-8AB1-489A3E554CA0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCat.Core", "src\DataCat.Core\DataCat.Core.csproj", "{8A7FA856-DCF3-4F87-AAA9-4080B875908E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCat.Auth", "src\DataCat.Auth\DataCat.Auth.csproj", "{906598D6-1EF0-4CDF-83C4-B754886FBC82}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataCat.Microservice.Core", "src\DataCat.Microservice.Core\DataCat.Microservice.Core.csproj", "{EC06D0E6-6494-4B4D-9D0F-63ADBB6017DA}"
 EndProject
@@ -29,10 +27,6 @@ Global
 		{8A7FA856-DCF3-4F87-AAA9-4080B875908E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A7FA856-DCF3-4F87-AAA9-4080B875908E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A7FA856-DCF3-4F87-AAA9-4080B875908E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{906598D6-1EF0-4CDF-83C4-B754886FBC82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{906598D6-1EF0-4CDF-83C4-B754886FBC82}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{906598D6-1EF0-4CDF-83C4-B754886FBC82}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{906598D6-1EF0-4CDF-83C4-B754886FBC82}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EC06D0E6-6494-4B4D-9D0F-63ADBB6017DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EC06D0E6-6494-4B4D-9D0F-63ADBB6017DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC06D0E6-6494-4B4D-9D0F-63ADBB6017DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -44,7 +38,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{1A93A4B1-D64A-453B-8AB1-489A3E554CA0} = {F4463152-2963-4983-9C06-C4433E951AC0}
 		{8A7FA856-DCF3-4F87-AAA9-4080B875908E} = {F4463152-2963-4983-9C06-C4433E951AC0}
-		{906598D6-1EF0-4CDF-83C4-B754886FBC82} = {F4463152-2963-4983-9C06-C4433E951AC0}
 		{EC06D0E6-6494-4B4D-9D0F-63ADBB6017DA} = {F4463152-2963-4983-9C06-C4433E951AC0}
 	EndGlobalSection
 EndGlobal
