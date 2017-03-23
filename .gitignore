@@ -265,3 +265,4 @@ Client/src/tmp
 npm-debug.log
 Client/src/tmp/app/**/*.js
 Client/src/tmp/app/**/*.js.map
+*.example.json
