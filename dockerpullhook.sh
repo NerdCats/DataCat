@@ -1,2 +1,2 @@
-#!bin/bash
+#!/bin/bash
 curl --request POST --url 'http://datacat.nerdcats.io:8080/pull?token=nerdcats' --header 'content-type: application/json' --data '{"mode": "docker","image": "nerdcats/datacat:prod", "arguments": "--name datacat -p 5000:5000"}'
