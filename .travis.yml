@@ -9,7 +9,6 @@ services:
 
 branches:
   only:
-  - master
   - prod
 
 addons:
@@ -27,6 +26,6 @@ script:
   dotnet publish -c Release
 
 after_script:
-  - docker build -t nerdcats/datacat:latest .
+  - docker build -t nerdcats/datacat:prod .
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASS
-  - docker push nerdcats/datacat:latest
+  - docker push nerdcats/datacat:prod
