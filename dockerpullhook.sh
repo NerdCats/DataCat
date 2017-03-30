@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 curl --request POST \
   --url 'http://datacat.nerdcats.io:8080/pull?token=nerdcats' \
   --header 'content-type: application/json' \
