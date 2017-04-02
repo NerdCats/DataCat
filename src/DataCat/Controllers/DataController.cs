@@ -60,6 +60,10 @@
                 return BadRequest(ModelState);
 
             var connectionRef = await connectionService.Find(connection);
+            if (connectionRef.User != User.GetUserId())
+            {
+                return Unauthorized();
+            }
             var dataService = new DataService(connectionRef);
 
             var result = await dataService.ExecuteAsync(collectionName, aggDocument);
