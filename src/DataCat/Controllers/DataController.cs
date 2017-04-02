@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using System.Reflection;
 
-    [Route("api/data")]
+    [Route("api/[controller]")]
     public class DataController : Controller
     {
         private IDataService dataService;

@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using DataCat.Core;
-using DataCat.Core.Converters;
-using DataCat.Microservice.Core.Options;
-
-namespace DataCat
+﻿namespace DataCat
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using DataCat.Core;
+    using DataCat.Core.Converters;
+    using DataCat.Microservice.Core.Options;
+
     public class Startup
     {
         public Startup(IHostingEnvironment env)
@@ -39,7 +39,6 @@ namespace DataCat
             services.AddResponseCompression();
 
             var databaseConfig = Configuration.GetSection("Database");
-            services.Configure<DatabaseOptions>(databaseConfig);
 
             // Initiate a dbContext      
             services.AddSingleton<IDbContext, DbContext>((provider) =>
@@ -76,6 +75,16 @@ namespace DataCat
                 .AllowAnyHeader());
 
             app.UseResponseCompression();
+
+            var securityOptions = new SecurityOptions();
+            Configuration.GetSection("Security").Bind(securityOptions);
+
+            app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
+            {
+                Authority = securityOptions.Authority,
+                AllowedScopes = securityOptions.AllowedScopes,
+                RequireHttpsMetadata = securityOptions.RequireHttpsMetadata
+            });
 
             app.UseMvc();
         }
