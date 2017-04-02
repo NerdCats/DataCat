@@ -28,7 +28,7 @@
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]DataConnectionModel model)
         {
-            if (!ModelState.IsValid)
+            if (model == null || !ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var result = await service.Create(model.ToEntity(this.User.Identity.Name));
@@ -48,7 +48,7 @@
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateResult([FromRoute]string id, [FromBody]DataConnectionModel model)
         {
-            if (!ModelState.IsValid)
+            if (model == null || !ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var result = await service.Update(model.ToEntity(id, this.User.Identity.Name));
