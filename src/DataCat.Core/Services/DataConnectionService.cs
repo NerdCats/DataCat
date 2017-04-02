@@ -6,6 +6,7 @@
     using MongoDB.Driver;
     using System;
     using DataCat.Core.Exception;
+    using MongoDB.Bson;
 
     public class DataConnectionService : IDataConnectionService
     {
@@ -20,8 +21,27 @@
             if (connection == null)
                 throw new ArgumentNullException(nameof(connection));
 
+            await Validate(connection);
+
             await this.Collection.InsertOneAsync(connection);
             return connection;
+        }
+
+        private async Task Validate(DataConnection connection)
+        {
+            var mongoConnectionString = new MongoUrl(connection.ConnectionString);
+            if (!string.IsNullOrWhiteSpace(mongoConnectionString.DatabaseName) 
+                && mongoConnectionString.DatabaseName!=connection.Database)
+            {
+                // TODO: Write a proper reason here
+                throw new InvalidOperationException();
+            }
+
+            var mongoClient = new MongoClient(mongoConnectionString);
+            var database = mongoClient.GetDatabase(connection.Database);
+            
+            // TODO: I have no idea whether it actually will throw an exception or not
+            await database.RunCommandAsync((Command<BsonDocument>)"{ping:1}");
         }
 
         public async Task<DataConnection> Find(string id)

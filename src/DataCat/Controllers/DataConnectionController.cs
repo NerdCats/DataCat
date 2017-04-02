@@ -25,6 +25,7 @@
         {
             try
             {
+                // TODO: Getting any connection like it doesn't matter. 
                 var result = await service.Find(id);
                 return Ok(result);
             }
@@ -51,6 +52,7 @@
         {
             try
             {
+                // TODO: Deleting any connection like it doesn't matter.
                 var result = await service.Delete(id);
                 return Ok(result);
             }
@@ -67,6 +69,7 @@
             if (model == null || !ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            // TODO: Updating any connection like it doesn't matter.
             var result = await service.Update(model.ToEntity(id, this.User.GetUserId()));
             return Ok(result);
         }
