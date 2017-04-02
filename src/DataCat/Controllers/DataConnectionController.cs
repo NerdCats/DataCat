@@ -1,5 +1,7 @@
 ﻿namespace DataCat.Controllers
 {
+    using DataCat.Constants;
+    using DataCat.Core.Exception;
     using DataCat.Core.Model;
     using DataCat.Core.Services;
     using Microsoft.AspNetCore.Authorization;
@@ -17,11 +19,18 @@
         }
 
         [Authorize]
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = RouteConstants.CreateDataConnectionRoute)]
         public async Task<IActionResult> Get(string id)
         {
-            var result = await service.Find(id);
-            return Ok(result);
+            try
+            {
+                var result = await service.Find(id);
+                return Ok(result);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [Authorize]
@@ -32,16 +41,22 @@
                 return BadRequest(ModelState);
 
             var result = await service.Create(model.ToEntity(this.User.Identity.Name));
-            // TODO: Should send back a Creted response
-            return Ok(result);
+            return Created(Url.Link(RouteConstants.CreateDataConnectionRoute, new { id = result.Id }), result);
         }
 
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var result = await service.Delete(id);
-            return Ok(result);
+            try
+            {
+                var result = await service.Delete(id);
+                return Ok(result);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [Authorize]
