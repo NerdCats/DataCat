@@ -3,11 +3,14 @@
     using MongoDB.Bson;
     using MongoDB.Driver;
     using System;
+    using DataCat.Core.Entity;
 
     public class DbContext: IDbContext
     {
         private MongoClient mongoClient;
         public IMongoDatabase Database { get; private set; }
+
+        public IMongoCollection<DataConnection> DataConnectionCollection { get; private set; }
 
         public DbContext(string connectionString, string databaseName)
         {
@@ -21,6 +24,13 @@
             mongoClient = new MongoClient(mongoUrlBuilder.ToMongoUrl());
 
             Database = mongoClient.GetDatabase(databaseName);
+
+            InitiateDataCatCollections();
+        }
+
+        private void InitiateDataCatCollections()
+        {
+            DataConnectionCollection = Database.GetCollection<DataConnection>(CollectionNames.DataConnectionCollection);
         }
 
         public IMongoCollection<BsonDocument> GetCollection(string collectionName)
