@@ -6,6 +6,7 @@
     using System.Reflection;
     using Microsoft.AspNetCore.Authorization;
     using DataCat.Core.Services;
+    using DataCat.Core.Utility;
 
     [Route("api/[controller]")]
     public class DataController : Controller
@@ -39,7 +40,7 @@
             // Otherwise send bad request
 
             var connectionRef = await connectionService.Find(connection);
-            if (connectionRef.User != User.Identity.Name)
+            if (connectionRef.User != User.GetUserId())
             {
                 return Unauthorized();
             }

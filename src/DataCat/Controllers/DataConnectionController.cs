@@ -4,6 +4,7 @@
     using DataCat.Core.Exception;
     using DataCat.Core.Model;
     using DataCat.Core.Services;
+    using DataCat.Core.Utility;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
@@ -40,7 +41,7 @@
             if (model == null || !ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await service.Create(model.ToEntity(this.User.Identity.Name));
+            var result = await service.Create(model.ToEntity(this.User.GetUserId()));
             return Created(Url.Link(RouteConstants.CreateDataConnectionRoute, new { id = result.Id }), result);
         }
 
@@ -66,7 +67,7 @@
             if (model == null || !ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await service.Update(model.ToEntity(id, this.User.Identity.Name));
+            var result = await service.Update(model.ToEntity(id, this.User.GetUserId()));
             return Ok(result);
         }
     }
