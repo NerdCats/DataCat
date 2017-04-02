@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using MongoDB.Driver;
     using System;
+    using DataCat.Core.Exception;
 
     public class DataConnectionService : IDataConnectionService
     {
@@ -16,20 +17,34 @@
 
         public async Task<DataConnection> Create(DataConnection connection)
         {
+            if (connection == null)
+                throw new ArgumentNullException(nameof(connection));
+
             await this.Collection.InsertOneAsync(connection);
             return connection;
         }
 
         public async Task<DataConnection> Find(string id)
         {
-            // TODO: Throw an exception or may be catch it so we know when something is not here. :)
-            var result = await this.Collection.Find(x => x.Id == id).FirstAsync();
+            if (string.IsNullOrWhiteSpace(id))
+                throw new ArgumentException(nameof(id));
+
+            var result = await this.Collection.Find(x => x.Id == id).FirstOrDefaultAsync();
+            if (result == null)
+                throw new EntityNotFoundException(typeof(DataConnection), id);
+
             return result;
         }
 
         public async Task<DataConnection> Delete(string id)
         {
+            if (string.IsNullOrWhiteSpace(id))
+                throw new ArgumentException(nameof(id));
+
             var result = await this.Collection.FindOneAndDeleteAsync(x => x.Id == id);
+            if (result == null)
+                throw new EntityDeleteException(typeof(DataConnection), id);
+
             return result;
         }
 
@@ -42,6 +57,9 @@
                 throw new ArgumentNullException(nameof(connection.Id));
 
             var result = await this.Collection.FindOneAndReplaceAsync(x => x.Id == connection.Id, connection);
+            if (result == null)
+                throw new EntityUpdateException(typeof(DataConnection), connection.Id);
+
             return result;
         }
     }
