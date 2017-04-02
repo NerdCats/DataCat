@@ -8,6 +8,8 @@
     using DataCat.Core;
     using DataCat.Core.Converters;
     using DataCat.Microservice.Core.Options;
+    using DataCat.Core.Db;
+    using DataCat.Core.Services;
 
     public class Startup
     {
@@ -48,6 +50,7 @@
             });
 
             services.AddSingleton<IDataService, DataService>();
+            services.AddSingleton<IDataConnectionService, DataConnectionService>();
 
             services.AddMvc()
                 .AddJsonOptions(options =>

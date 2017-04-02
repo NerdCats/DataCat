@@ -1,5 +1,6 @@
 ﻿namespace DataCat.Core
 {
+    using DataCat.Core.Db;
     using MongoDB.Bson;
     using MongoDB.Driver;
     using System.Collections.Generic;

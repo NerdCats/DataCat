@@ -6,10 +6,10 @@
     using MongoDB.Driver;
     using System;
 
-    public class DataConnectionServices
+    public class DataConnectionService : IDataConnectionService
     {
         public IMongoCollection<DataConnection> Collection { get; private set; }
-        public DataConnectionServices(IDbContext dbContext)
+        public DataConnectionService(IDbContext dbContext)
         {
             this.Collection = dbContext.DataConnectionCollection;
         }
