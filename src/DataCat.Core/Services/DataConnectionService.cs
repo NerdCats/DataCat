@@ -22,6 +22,7 @@
 
         public async Task<DataConnection> Find(string id)
         {
+            // TODO: Throw an exception or may be catch it so we know when something is not here. :)
             var result = await this.Collection.Find(x => x.Id == id).FirstAsync();
             return result;
         }
