@@ -1,4 +1,4 @@
-﻿namespace DataCat.Core
+﻿namespace DataCat.Core.Db
 {
     using MongoDB.Bson;
     using MongoDB.Driver;

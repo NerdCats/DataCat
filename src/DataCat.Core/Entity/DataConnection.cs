@@ -1,11 +1,11 @@
 ﻿namespace DataCat.Core.Entity
 {
+    using DataCat.Core.Db;
     using MongoDB.Bson.Serialization.Attributes;
 
-    public class DataConnection
+    [BsonIgnoreExtraElements(true)]
+    public class DataConnection : DbEntity
     {
-        [BsonId]
-        public string Id { get; set; }
         public string ConnectionString { get; set; }
         public string Name { get; set; }
     }
