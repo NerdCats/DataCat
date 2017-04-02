@@ -1,6 +1,5 @@
 ﻿namespace DataCat.Core.Db
 {
-    using MongoDB.Bson;
     using MongoDB.Driver;
     using System;
     using DataCat.Core.Entity;
@@ -31,11 +30,6 @@
         private void InitiateDataCatCollections()
         {
             DataConnectionCollection = Database.GetCollection<DataConnection>(CollectionNames.DataConnectionCollection);
-        }
-
-        public IMongoCollection<BsonDocument> GetCollection(string collectionName)
-        {
-            return Database.GetCollection<BsonDocument>(collectionName);
         }
     }
 }

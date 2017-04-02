@@ -8,7 +8,5 @@
     {
         IMongoDatabase Database { get; }
         IMongoCollection<DataConnection> DataConnectionCollection { get; }
-
-        IMongoCollection<BsonDocument> GetCollection(string collectionName);
     }
 }

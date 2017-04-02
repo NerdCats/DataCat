@@ -12,6 +12,9 @@
         [Required(AllowEmptyStrings = false, ErrorMessage = "Name required")]
         public string Name { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Database required")]
+        public string Database { get; set; }
+
         public DataConnection ToEntity(string userId)
         {
             if (string.IsNullOrWhiteSpace(userId))
@@ -20,7 +23,9 @@
             var connectionEntity = new DataConnection()
             {
                 ConnectionString = this.ConnectionString,
-                Name = this.Name
+                Name = this.Name,
+                Database = this.Database,
+                User = userId
             };
             return connectionEntity;
         }
@@ -29,7 +34,10 @@
         {
             if (string.IsNullOrWhiteSpace(id))
                 throw new ArgumentException(nameof(id));
-            return ToEntity(userId);
+
+            var result = ToEntity(userId);
+            result.Id = id;
+            return result;
         }
     }
 }

@@ -49,7 +49,6 @@
                 return dbContext;
             });
 
-            services.AddSingleton<IDataService, DataService>();
             services.AddSingleton<IDataConnectionService, DataConnectionService>();
 
             services.AddMvc()
