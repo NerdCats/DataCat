@@ -37,6 +37,8 @@
                 else
                     throw context.Exception;
 
+                // TODO: May be a default exception/error payload here?
+                result.Content = context.Exception.Message;
                 result.ContentType = "application/json";
                 context.Result = result;
             }

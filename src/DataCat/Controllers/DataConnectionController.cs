@@ -1,7 +1,6 @@
 ﻿namespace DataCat.Controllers
 {
     using DataCat.Constants;
-    using DataCat.Core.Exception;
     using DataCat.Core.Model;
     using DataCat.Core.Services;
     using DataCat.Core.Utility;
@@ -23,18 +22,11 @@
         [HttpGet("{id}", Name = RouteConstants.CreateDataConnectionRoute)]
         public async Task<IActionResult> Get(string id)
         {
-            try
-            {
-                var result = await service.Find(id);
-                if (result.User != this.User.GetUserId())
-                    return Unauthorized();
+            var result = await service.Find(id);
+            if (result.User != this.User.GetUserId())
+                return Unauthorized();
 
-                return Ok(result);
-            }
-            catch (EntityNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            return Ok(result);
         }
 
         [Authorize]
@@ -52,20 +44,13 @@
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            try
-            {
-                var connection = await service.Find(id);
-                if (connection.User != this.User.GetUserId())
-                    return Unauthorized();
+            var connection = await service.Find(id);
+            if (connection.User != this.User.GetUserId())
+                return Unauthorized();
 
-                // TODO: Deleting any connection like it doesn't matter.
-                var result = await service.Delete(id);
-                return Ok(result);
-            }
-            catch (EntityNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
+            // TODO: Deleting any connection like it doesn't matter.
+            var result = await service.Delete(id);
+            return Ok(result);
         }
 
         [Authorize]
