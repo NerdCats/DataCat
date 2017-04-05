@@ -1,11 +1,11 @@
 ﻿namespace DataCat.ActionFilter
 {
     using DataCat.Core.Exception;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
     using Newtonsoft.Json;
     using System;
-    using System.ComponentModel.DataAnnotations;
     using System.Net;
 
     /// <summary>
@@ -14,6 +14,13 @@
     /// </summary>
     public class ServerExceptionFilter : ExceptionFilterAttribute
     {
+        private IHostingEnvironment _hostingEnvironment;
+
+        public ServerExceptionFilter(IHostingEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
+
         public override void OnException(ExceptionContext context)
         {
             ApiError error = null;
@@ -48,12 +55,14 @@
                 string stack = null;
 #else
                 var msg = context.Exception.GetBaseException().Message;
-                string stack = context.Exception.StackTrace;
+                string stack = context.Exception.StackTrace.Trim();        
+#endif
                 error = new ApiError(msg);
                 error.StackTrace = stack;
-#endif
                 result.Content = JsonConvert.SerializeObject(error);
-                result.ContentType = "application/json";    
+                result.ContentType = "application/json";
+
+                context.Result = result;
             }
         }
     }

@@ -5,16 +5,20 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-    using DataCat.Core;
     using DataCat.Core.Converters;
     using DataCat.Microservice.Core.Options;
     using DataCat.Core.Db;
     using DataCat.Core.Services;
+    using DataCat.ActionFilter;
 
     public class Startup
     {
+        private IHostingEnvironment environment;
+
         public Startup(IHostingEnvironment env)
         {
+            this.environment = env;
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -51,7 +55,10 @@
 
             services.AddSingleton<IDataConnectionService, DataConnectionService>();
 
-            services.AddMvc()
+            services.AddMvc(options =>
+                {
+                    options.Filters.Add(new ServerExceptionFilter(environment));
+                })
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.Converters.Add(new BsonDocumentConverter());
@@ -65,11 +72,6 @@
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
 
             app.UseCors(builder => builder
                 .AllowAnyOrigin()
