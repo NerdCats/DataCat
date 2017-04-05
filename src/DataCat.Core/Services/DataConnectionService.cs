@@ -44,7 +44,7 @@
                 var database = mongoClient.GetDatabase(connection.Database);
 
                 // TODO: I have no idea whether it actually will throw an exception or not
-                await database.RunCommandAsync((Command<BsonDocument>)"{ping:1}");
+                var pingResult = await database.RunCommandAsync((Command<BsonDocument>)"{ping:1}");
             }
             catch (MongoConfigurationException ex)
             {

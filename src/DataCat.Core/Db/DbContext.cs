@@ -25,11 +25,20 @@
             Database = mongoClient.GetDatabase(databaseName);
 
             InitiateDataCatCollections();
+            InitiateIndexes();
         }
 
         private void InitiateDataCatCollections()
         {
             DataConnectionCollection = Database.GetCollection<DataConnection>(CollectionNames.DataConnectionCollection);
+        }
+
+        private void InitiateIndexes()
+        {
+            var indexOptions = new CreateIndexOptions();
+            indexOptions.Unique = true;
+
+            DataConnectionCollection.Indexes.CreateOne(Builders<DataConnection>.IndexKeys.Ascending(x => x.Name), indexOptions);
         }
     }
 }
