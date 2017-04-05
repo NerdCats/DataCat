@@ -58,12 +58,12 @@
                 string stack = context.Exception.StackTrace.Trim();        
 #endif
                 error = new ApiError(msg);
-                error.StackTrace = stack;
-                result.Content = JsonConvert.SerializeObject(error);
-                result.ContentType = "application/json";
-
-                context.Result = result;
+                error.StackTrace = stack;    
             }
+
+            result.Content = JsonConvert.SerializeObject(error);
+            result.ContentType = "application/json";
+            context.Result = result;
         }
     }
 }

@@ -7,6 +7,7 @@
     using System;
     using DataCat.Core.Exception;
     using MongoDB.Bson;
+    using System.Net;
 
     public class DataConnectionService : IDataConnectionService
     {
@@ -36,7 +37,7 @@
                     && mongoConnectionString.DatabaseName != connection.Database)
                 {
                     // TODO: Write a proper reason here
-                    throw new InvalidOperationException();
+                    throw new ApiException("Database name doesn't match", HttpStatusCode.BadRequest);
                 }
 
                 var mongoClient = new MongoClient(mongoConnectionString);
