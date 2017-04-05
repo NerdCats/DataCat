@@ -48,7 +48,11 @@
             }
             catch (MongoConfigurationException ex)
             {
-                throw new InvalidOperationException(ex.Message, ex);
+                throw new ApiException(ex.Message, HttpStatusCode.BadRequest);
+            }
+            catch (MongoCommandException ex)
+            {
+                throw new ApiException(ex.Message, HttpStatusCode.Forbidden);
             }
         }
 
