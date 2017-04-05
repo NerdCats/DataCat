@@ -3,6 +3,7 @@
     using DataCat.Core.Exception;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
+    using Newtonsoft.Json;
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Net;
@@ -15,32 +16,44 @@
     {
         public override void OnException(ExceptionContext context)
         {
-            if (context.Exception != null && context.HttpContext.Request != null)
-            {
-                var result = new ContentResult();
-                if (context.Exception is NotImplementedException)
-                    result.StatusCode = (int)HttpStatusCode.NotImplemented;
-                else if (context.Exception is EntityNotFoundException)
-                    result.StatusCode = (int)HttpStatusCode.NotFound;
-                else if (context.Exception is InvalidOperationException)
-                    result.StatusCode = (int)HttpStatusCode.Forbidden;
-                else if (context.Exception is ArgumentException)
-                    result.StatusCode = (int)HttpStatusCode.BadRequest;
-                else if (context.Exception is FormatException)
-                    result.StatusCode = (int)HttpStatusCode.BadRequest;
-                else if (context.Exception is ValidationException)
-                    result.StatusCode = (int)HttpStatusCode.BadRequest;
-                else if (context.Exception is NotSupportedException)
-                    result.StatusCode = (int)HttpStatusCode.BadRequest;
-                else if (context.Exception is UnauthorizedAccessException)
-                    result.StatusCode = (int)HttpStatusCode.Unauthorized;
-                else
-                    throw context.Exception;
+            ApiError error = null;
+            var result = new ContentResult();
+            result.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-                // TODO: May be a default exception/error payload here?
-                result.Content = context.Exception.Message;
-                result.ContentType = "application/json";
-                context.Result = result;
+            if (context.Exception is ApiException)
+            {
+                var ex = context.Exception as ApiException;
+                error = new ApiError(ex.Message, ex.ModelErrors);
+                result.StatusCode = (int) ex.StatusCode;
+            }
+            else if(context.Exception is UnauthorizedAccessException)
+            {
+                error = new ApiError("Unauthorized Access");
+                result.StatusCode = (int)HttpStatusCode.Unauthorized;
+            }
+            else if (context.Exception is NotImplementedException)
+            {
+                error = new ApiError("Workflow not implemented");
+                result.StatusCode = (int)HttpStatusCode.NotImplemented;
+            }
+            else if (context.Exception is EntityNotFoundException)
+            {
+                error = new ApiError(context.Exception.Message);
+                result.StatusCode = (int)HttpStatusCode.NotFound;
+            }
+            else
+            {
+#if !DEBUG
+                var msg = "An unhandled error occurred.";                
+                string stack = null;
+#else
+                var msg = context.Exception.GetBaseException().Message;
+                string stack = context.Exception.StackTrace;
+                error = new ApiError(msg);
+                error.StackTrace = stack;
+#endif
+                result.Content = JsonConvert.SerializeObject(error);
+                result.ContentType = "application/json";    
             }
         }
     }

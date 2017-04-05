@@ -20,5 +20,10 @@
                 this.ModelErrors = stateDict.Where(x => x.Value.Errors.Count > 0)
                     .SelectMany(x => x.Value.Errors);
         }
+
+        public ApiException(Exception ex, HttpStatusCode statusCode = HttpStatusCode.InternalServerError) : base(ex.Message)
+        {
+            StatusCode = statusCode;
+        }
     }
 }
