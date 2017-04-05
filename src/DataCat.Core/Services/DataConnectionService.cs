@@ -29,19 +29,26 @@
 
         private async Task Validate(DataConnection connection)
         {
-            var mongoConnectionString = new MongoUrl(connection.ConnectionString);
-            if (!string.IsNullOrWhiteSpace(mongoConnectionString.DatabaseName) 
-                && mongoConnectionString.DatabaseName!=connection.Database)
+            try
             {
-                // TODO: Write a proper reason here
-                throw new InvalidOperationException();
-            }
+                var mongoConnectionString = new MongoUrl(connection.ConnectionString);
+                if (!string.IsNullOrWhiteSpace(mongoConnectionString.DatabaseName)
+                    && mongoConnectionString.DatabaseName != connection.Database)
+                {
+                    // TODO: Write a proper reason here
+                    throw new InvalidOperationException();
+                }
 
-            var mongoClient = new MongoClient(mongoConnectionString);
-            var database = mongoClient.GetDatabase(connection.Database);
-            
-            // TODO: I have no idea whether it actually will throw an exception or not
-            await database.RunCommandAsync((Command<BsonDocument>)"{ping:1}");
+                var mongoClient = new MongoClient(mongoConnectionString);
+                var database = mongoClient.GetDatabase(connection.Database);
+
+                // TODO: I have no idea whether it actually will throw an exception or not
+                await database.RunCommandAsync((Command<BsonDocument>)"{ping:1}");
+            }
+            catch (MongoConfigurationException ex)
+            {
+                throw new InvalidOperationException(ex.Message, ex);
+            }
         }
 
         public async Task<DataConnection> Find(string id)
