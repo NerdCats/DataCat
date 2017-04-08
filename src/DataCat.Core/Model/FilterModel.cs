@@ -19,7 +19,7 @@
 
             var filterEntity = new Filter()
             {
-                FilterString = this.FilterString,
+                FilterString = NormalizeFilter(this.FilterString),
                 Name = this.Name,
                 User = userId
             };
@@ -35,6 +35,18 @@
             var result = ToEntity(userId);
             result.Id = id;
             return result;
+        }
+
+        private string NormalizeFilter(string filter)
+        {
+            if (string.IsNullOrWhiteSpace(filter))
+                throw new ArgumentException(nameof(filter));
+
+            var normalizedFilter = filter
+                .Replace("$", "_$")
+                .Replace(".", "#");
+
+            return normalizedFilter;
         }
     }
 }
