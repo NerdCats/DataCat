@@ -9,5 +9,6 @@
         public string Name { get; set; }
         public string FilterString { get; set; }
         public string User { get; set; }
+        public string FilterType { get; set; }
     }
 }

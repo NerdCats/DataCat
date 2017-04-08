@@ -12,6 +12,8 @@
         [Required(AllowEmptyStrings = false, ErrorMessage = "Missing the filter name in the model")]
         public string Name { get; set; }
 
+        public string FilterType { get; set; } = FilterTypes.Query;
+
         public Filter ToEntity(string userId)
         {
             if (string.IsNullOrWhiteSpace(userId))
@@ -19,9 +21,10 @@
 
             var filterEntity = new Filter()
             {
-                FilterString = NormalizeFilter(this.FilterString),
+                FilterString = this.FilterString,
                 Name = this.Name,
-                User = userId
+                User = userId,
+                FilterType = this.FilterType
             };
 
             return filterEntity;
@@ -35,18 +38,6 @@
             var result = ToEntity(userId);
             result.Id = id;
             return result;
-        }
-
-        private string NormalizeFilter(string filter)
-        {
-            if (string.IsNullOrWhiteSpace(filter))
-                throw new ArgumentException(nameof(filter));
-
-            var normalizedFilter = filter
-                .Replace("$", "_$")
-                .Replace(".", "#");
-
-            return normalizedFilter;
         }
     }
 }
