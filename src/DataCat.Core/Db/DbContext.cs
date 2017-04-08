@@ -1,13 +1,15 @@
-﻿namespace DataCat.Core
+﻿namespace DataCat.Core.Db
 {
-    using MongoDB.Bson;
     using MongoDB.Driver;
     using System;
+    using DataCat.Core.Entity;
 
     public class DbContext: IDbContext
     {
         private MongoClient mongoClient;
         public IMongoDatabase Database { get; private set; }
+
+        public IMongoCollection<DataConnection> DataConnectionCollection { get; private set; }
 
         public DbContext(string connectionString, string databaseName)
         {
@@ -21,11 +23,22 @@
             mongoClient = new MongoClient(mongoUrlBuilder.ToMongoUrl());
 
             Database = mongoClient.GetDatabase(databaseName);
+
+            InitiateDataCatCollections();
+            InitiateIndexes();
         }
 
-        public IMongoCollection<BsonDocument> GetCollection(string collectionName)
+        private void InitiateDataCatCollections()
         {
-            return Database.GetCollection<BsonDocument>(collectionName);
+            DataConnectionCollection = Database.GetCollection<DataConnection>(CollectionNames.DataConnectionCollection);
+        }
+
+        private void InitiateIndexes()
+        {
+            var indexOptions = new CreateIndexOptions();
+            indexOptions.Unique = true;
+
+            DataConnectionCollection.Indexes.CreateOne(Builders<DataConnection>.IndexKeys.Ascending(x => x.Name), indexOptions);
         }
     }
 }

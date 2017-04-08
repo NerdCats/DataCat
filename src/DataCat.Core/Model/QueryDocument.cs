@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Newtonsoft.Json.Linq;
+    using Newtonsoft.Json;
 
     public class QueryDocument
     {
@@ -10,26 +11,31 @@
         /// </summary>
         /// 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Invalid/null query specification")]
-        public JObject query { get; set; }
+        [JsonProperty("query")]
+        public JObject Query { get; set; }
 
         /// <summary>
         /// Mongodb projection object to project data from the result
         /// </summary>
-        public JObject project { get; set; }
+        [JsonProperty("project")]
+        public JObject Project { get; set; }
 
         /// <summary>
         /// Mongodb sort operator
         /// </summary>
-        public JObject sort { get; set; }
+        [JsonProperty("sort")]
+        public JObject Sort { get; set; }
 
         /// <summary>
         /// Mongodb skip variable to skip results
         /// </summary>
-        public int skip { get; set; } = 0;
+        [JsonProperty("skip")]
+        public int Skip { get; set; } = 0;
 
         /// <summary>
         /// mongodb limit variable to limit results
         /// </summary>
-        public int limit { get; set; } = 20;
+        [JsonProperty("limit")]
+        public int Limit { get; set; } = 20;
     }
 }

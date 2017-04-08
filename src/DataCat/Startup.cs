@@ -1,18 +1,24 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using DataCat.Core;
-using DataCat.Core.Converters;
-using DataCat.Microservice.Core.Options;
-
-namespace DataCat
+﻿namespace DataCat
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using DataCat.Core.Converters;
+    using DataCat.Microservice.Core.Options;
+    using DataCat.Core.Db;
+    using DataCat.Core.Services;
+    using DataCat.ActionFilter;
+
     public class Startup
     {
+        private IHostingEnvironment environment;
+
         public Startup(IHostingEnvironment env)
         {
+            this.environment = env;
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -39,7 +45,6 @@ namespace DataCat
             services.AddResponseCompression();
 
             var databaseConfig = Configuration.GetSection("Database");
-            services.Configure<DatabaseOptions>(databaseConfig);
 
             // Initiate a dbContext      
             services.AddSingleton<IDbContext, DbContext>((provider) =>
@@ -48,9 +53,12 @@ namespace DataCat
                 return dbContext;
             });
 
-            services.AddSingleton<IDataService, DataService>();
+            services.AddSingleton<IDataConnectionService, DataConnectionService>();
 
-            services.AddMvc()
+            services.AddMvc(options =>
+                {
+                    options.Filters.Add(new ServerExceptionFilter(environment));
+                })
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.Converters.Add(new BsonDocumentConverter());
@@ -65,17 +73,22 @@ namespace DataCat
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
             app.UseCors(builder => builder
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
 
             app.UseResponseCompression();
+
+            var securityOptions = new SecurityOptions();
+            Configuration.GetSection("Security").Bind(securityOptions);
+
+            app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions
+            {
+                Authority = securityOptions.Authority,
+                AllowedScopes = securityOptions.AllowedScopes,
+                RequireHttpsMetadata = securityOptions.RequireHttpsMetadata
+            });
 
             app.UseMvc();
         }

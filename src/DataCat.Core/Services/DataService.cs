@@ -1,5 +1,6 @@
 ﻿namespace DataCat.Core
 {
+    using DataCat.Core.Entity;
     using MongoDB.Bson;
     using MongoDB.Driver;
     using System.Collections.Generic;
@@ -8,38 +9,40 @@
 
     public class DataService : IDataService
     {
-        private IDbContext dbContext;
+        private MongoClient mongoClient;
+        private IMongoDatabase database;
 
-        public DataService(IDbContext context)
+        public DataService(DataConnection connection)
         {
-            this.dbContext = context;
+            this.mongoClient = new MongoClient(connection.ConnectionString);
+            this.database = mongoClient.GetDatabase(connection.Database);
         }
 
         public async Task<List<BsonDocument>> ExecuteAsync(string collectionName, QueryDocument document)
         {
-            var collection = this.dbContext.GetCollection(collectionName);
-            var queryDocument = BsonDocument.Parse(document.query.ToString());
+            var collection = this.database.GetCollection<BsonDocument>(collectionName);
+            var queryDocument = BsonDocument.Parse(document.Query.ToString());
 
             var fluentQuery = collection
                 .Find(queryDocument);
 
-            if (document.project != null)
+            if (document.Project != null)
             {
-                var projectDocument = BsonDocument.Parse(document.project.ToString());
+                var projectDocument = BsonDocument.Parse(document.Project.ToString());
                 fluentQuery = fluentQuery
                     .Project(projectDocument);
             }
 
-            if (document.sort != null)
+            if (document.Sort != null)
             {
-                var sortDocument = BsonDocument.Parse(document.sort.ToString());
+                var sortDocument = BsonDocument.Parse(document.Sort.ToString());
                 fluentQuery = fluentQuery
                     .Sort(sortDocument);
             }
 
             var result = await fluentQuery
-                .Skip(document.skip)
-                .Limit(document.limit)
+                .Skip(document.Skip)
+                .Limit(document.Limit)
                 .ToListAsync();
 
             return result;
@@ -47,7 +50,7 @@
 
         public async Task<List<BsonDocument>> ExecuteAsync(string collectionName, AggregateDocument document)
         {
-            var collection = this.dbContext.GetCollection(collectionName);
+            var collection = this.database.GetCollection<BsonDocument>(collectionName);
 
             // TODO: May be we need a smart way to expose aggregation options? May be?
 
