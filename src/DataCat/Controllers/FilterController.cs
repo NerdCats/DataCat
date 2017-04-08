@@ -1,30 +1,72 @@
 ﻿namespace DataCat.Controllers
 {
-    using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Authorization;
     using DataCat.Core.Model;
     using DataCat.Core.Exception;
     using System.Net;
-    using System;
+    using DataCat.Core.Services;
+    using System.Threading.Tasks;
+    using DataCat.Core.Utility;
+    using DataCat.Constants;
 
     [Route("api/[controller]")]
     public class FilterController : Controller
     {
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private IFilterService service;
+
+        public FilterController(IFilterService service)
         {
-            return new string[] { "value1", "value2" };
+            this.service = service;
         }
 
         [Authorize]
-        [HttpPost()]
-        public void Post([FromBody]FilterModel model)
+        [HttpGet("{id}", Name = RouteConstants.CreateFilterRoute)]
+        public async Task<IActionResult> Get(string id)
+        {
+            var result = await service.Find(id);
+            if (result.User != this.User.GetUserId())
+                return Unauthorized();
+            return Ok(result);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody]FilterModel model)
         {
             if (model == null || !ModelState.IsValid)
                 throw new ApiException("Model error encountered", HttpStatusCode.BadRequest, ModelState);
 
-            throw new NotImplementedException();
+            var result = await service.Create(model.ToEntity(this.User.GetUserId()));
+            return Created(Url.Link(RouteConstants.CreateFilterRoute, new { id = result.Id }), result);
+        }
+
+        [Authorize]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var filter = await service.Find(id);
+            if (filter.User != this.User.GetUserId())
+                return Unauthorized();
+
+            // TODO: Deleting any connection like it doesn't matter.
+            var result = await service.Delete(id);
+            return Ok(result);
+        }
+
+        [Authorize]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateResult([FromRoute]string id, [FromBody]FilterModel model)
+        {
+            if (model == null || !ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var filter = await service.Find(id);
+            if (filter.User != this.User.GetUserId())
+                return Unauthorized();
+
+            var result = await service.Update(model.ToEntity(id, this.User.GetUserId()));
+            return Ok(result);
         }
     }
 }
