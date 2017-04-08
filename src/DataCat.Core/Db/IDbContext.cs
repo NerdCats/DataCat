@@ -7,5 +7,6 @@
     {
         IMongoDatabase Database { get; }
         IMongoCollection<DataConnection> DataConnectionCollection { get; }
+        IMongoCollection<Filter> FilterConnection { get; }
     }
 }

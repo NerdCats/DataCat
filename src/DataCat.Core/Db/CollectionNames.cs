@@ -3,5 +3,6 @@
     public class CollectionNames
     {
         public const string DataConnectionCollection = "DataConnections";
+        public const string FilterConnection = "Filters";
     }
 }

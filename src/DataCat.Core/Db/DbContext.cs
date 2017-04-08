@@ -10,6 +10,7 @@
         public IMongoDatabase Database { get; private set; }
 
         public IMongoCollection<DataConnection> DataConnectionCollection { get; private set; }
+        public IMongoCollection<Filter> FilterConnection { get; private set; }
 
         public DbContext(string connectionString, string databaseName)
         {
@@ -31,6 +32,7 @@
         private void InitiateDataCatCollections()
         {
             DataConnectionCollection = Database.GetCollection<DataConnection>(CollectionNames.DataConnectionCollection);
+            FilterConnection = Database.GetCollection<Filter>(CollectionNames.FilterConnection);
         }
 
         private void InitiateIndexes()
