@@ -1,12 +1,15 @@
 ﻿namespace DataCat.Controllers
 {
     using DataCat.Constants;
+    using DataCat.Core.Entity;
     using DataCat.Core.Model;
+    using DataCat.Core.Paging;
     using DataCat.Core.Services;
     using DataCat.Core.Utility;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System;
+    using MongoDB.Driver;
+    using MongoDB.Driver.Linq;
     using System.Threading.Tasks;
 
     [Route("api/[controller]")]
@@ -20,10 +23,28 @@
         }
 
         [Authorize]
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet(Name = RouteConstants.GetDataConnectionsRoute)]
+        public async Task<IActionResult> Get(int page = 0, int pageSize = PagingConstants.MaxPageSize, bool envelope = true)
         {
-            throw new NotImplementedException();
+            var total = service.Collection.Count(x => true);
+            var result = await service.Collection
+                .AsQueryable()
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            if (envelope)
+            {
+                var pagedResult = new PageEnvelope<DataConnection>(
+                    total, page, pageSize, RouteConstants.GetDataConnectionsRoute,
+                    result, this.Request, this.Url);
+
+                return Ok(pagedResult);
+            }
+            else
+            {
+                return Ok(result);
+            }
         }
 
         [Authorize]

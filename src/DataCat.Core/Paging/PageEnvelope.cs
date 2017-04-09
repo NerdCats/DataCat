@@ -18,7 +18,7 @@
 
         public PageEnvelope(
                     long total,
-                    long page,
+                    int page,
                     int pageSize,
                     string routeName,
                     IEnumerable<T> data,
@@ -26,6 +26,8 @@
                     IUrlHelper urlHelper)
         {
             var paginationHelper = new PagingHelper(urlHelper);
+            pageSize = PagingHelper.ValidatePageSize(PagingConstants.MaxPageSize, pageSize, page);
+
             var totalPages = (int)Math.Ceiling((double)total / pageSize);
 
             var nextPage = page < totalPages - 1 ? paginationHelper.GeneratePageUrl(routeName, page + 1, pageSize, request) : string.Empty;
