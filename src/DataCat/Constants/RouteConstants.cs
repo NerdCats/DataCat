@@ -6,5 +6,6 @@
         public const string GetDataConnectionsRoute = "dataconnection.browse";
 
         public const string CreateFilterRoute = "filter.get";
+        public const string GetFiltersRoute = "filter.browse";
     }
 }

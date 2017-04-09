@@ -4,13 +4,11 @@
     using DataCat.Constants;
     using DataCat.Core.Entity;
     using DataCat.Core.Model;
-    using DataCat.Core.Paging;
     using DataCat.Core.Services;
     using DataCat.Core.Utility;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using MongoDB.Driver;
-    using MongoDB.Driver.Linq;
     using System.Linq;
     using System.Threading.Tasks;
 

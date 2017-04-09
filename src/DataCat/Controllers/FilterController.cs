@@ -9,6 +9,10 @@
     using System.Threading.Tasks;
     using DataCat.Core.Utility;
     using DataCat.Constants;
+    using DataCat.Core.Entity;
+    using System.Linq;
+    using DataCat.ActionFilter;
+    using MongoDB.Driver;
 
     [Route("api/[controller]")]
     public class FilterController : Controller
@@ -18,6 +22,14 @@
         public FilterController(IFilterService service)
         {
             this.service = service;
+        }
+
+        [Authorize]
+        [HttpGet(Name = RouteConstants.GetFiltersRoute)]
+        [Paginate]
+        public IQueryable<Filter> Get()
+        {
+            return service.Collection.AsQueryable();
         }
 
         [Authorize]
