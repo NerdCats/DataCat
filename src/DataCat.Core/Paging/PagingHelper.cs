@@ -21,12 +21,11 @@
             long pageSize, 
             HttpRequest request)
         {
-            Dictionary<string, object> routeParams = new Dictionary<string, object>();
             var queryParams = request.Query.ToDictionary(x => x.Key, x => x.Value.ToList());
             queryParams[PagingQueryParameters.Page] = new List<string>() { page.ToString() };
             queryParams[PagingQueryParameters.PageSize] = new List<string>() { pageSize.ToString() };
 
-            return urlHelper.Link(routeName, routeParams);
+            return urlHelper.Link(routeName, queryParams);
         }
 
         public static int ValidatePageSize(int maxPageSize, int pageSize, int page)

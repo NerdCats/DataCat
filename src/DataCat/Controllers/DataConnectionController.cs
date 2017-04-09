@@ -1,5 +1,6 @@
 ﻿namespace DataCat.Controllers
 {
+    using DataCat.ActionFilter;
     using DataCat.Constants;
     using DataCat.Core.Entity;
     using DataCat.Core.Model;
@@ -10,6 +11,7 @@
     using Microsoft.AspNetCore.Mvc;
     using MongoDB.Driver;
     using MongoDB.Driver.Linq;
+    using System.Linq;
     using System.Threading.Tasks;
 
     [Route("api/[controller]")]
@@ -24,27 +26,30 @@
 
         [Authorize]
         [HttpGet(Name = RouteConstants.GetDataConnectionsRoute)]
-        public async Task<IActionResult> Get(int page = 0, int pageSize = PagingConstants.MaxPageSize, bool envelope = true)
+        [Paginate]
+        public IQueryable<DataConnection> Get(int page = 0, int pageSize = PagingConstants.MaxPageSize, bool envelope = true)
         {
             var total = service.Collection.Count(x => true);
-            var result = await service.Collection
-                .AsQueryable()
-                .Skip(page * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
+            //var result = await service.Collection
+            //    .AsQueryable()
+            //    .Skip(page * pageSize)
+            //    .Take(pageSize)
+            //    .ToListAsync();
 
-            if (envelope)
-            {
-                var pagedResult = new PageEnvelope<DataConnection>(
-                    total, page, pageSize, RouteConstants.GetDataConnectionsRoute,
-                    result, this.Request, this.Url);
+            //if (envelope)
+            //{
+            //    var pagedResult = new PageEnvelope<DataConnection>(
+            //        total, page, pageSize, RouteConstants.GetDataConnectionsRoute,
+            //        result, this.Request, this.Url);
 
-                return Ok(pagedResult);
-            }
-            else
-            {
-                return Ok(result);
-            }
+            //    return Ok(pagedResult);
+            //}
+            //else
+            //{
+            //    return Ok(result);
+            //}
+
+            return service.Collection.AsQueryable();
         }
 
         [Authorize]
