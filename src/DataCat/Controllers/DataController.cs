@@ -14,7 +14,7 @@
         private IDataConnectionService connectionService;
 
         public DataController(IDataConnectionService connectionService)
-        {
+        { 
             this.connectionService = connectionService;
         }
 

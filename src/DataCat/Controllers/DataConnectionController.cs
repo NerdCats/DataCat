@@ -6,6 +6,7 @@
     using DataCat.Core.Utility;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Threading.Tasks;
 
     [Route("api/[controller]")]
@@ -16,6 +17,13 @@
         public DataConnectionController(IDataConnectionService service)
         {
             this.service = service;
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            throw new NotImplementedException();
         }
 
         [Authorize]
