@@ -27,28 +27,8 @@
         [Authorize]
         [HttpGet(Name = RouteConstants.GetDataConnectionsRoute)]
         [Paginate]
-        public IQueryable<DataConnection> Get(int page = 0, int pageSize = PagingConstants.MaxPageSize, bool envelope = true)
+        public IQueryable<DataConnection> Get()
         {
-            var total = service.Collection.Count(x => true);
-            //var result = await service.Collection
-            //    .AsQueryable()
-            //    .Skip(page * pageSize)
-            //    .Take(pageSize)
-            //    .ToListAsync();
-
-            //if (envelope)
-            //{
-            //    var pagedResult = new PageEnvelope<DataConnection>(
-            //        total, page, pageSize, RouteConstants.GetDataConnectionsRoute,
-            //        result, this.Request, this.Url);
-
-            //    return Ok(pagedResult);
-            //}
-            //else
-            //{
-            //    return Ok(result);
-            //}
-
             return service.Collection.AsQueryable();
         }
 

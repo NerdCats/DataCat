@@ -22,6 +22,12 @@
                 context.HttpContext.Request.QueryString =
                     context.HttpContext.Request.QueryString.Add(PagingQueryParameters.PageSize, PagingConstants.MaxPageSize.ToString());
             }
+
+            if (!queryParams.ContainsKey(PagingQueryParameters.Envelope))
+            {
+                context.HttpContext.Request.QueryString =
+                    context.HttpContext.Request.QueryString.Add(PagingQueryParameters.Envelope, true.ToString());
+            }
         }
 
         public override void OnActionExecuted(ActionExecutedContext context)
@@ -39,6 +45,13 @@
 
             var total = value.Count();
             var content = value.Skip(page * pageSize).Take(pageSize).ToList();
+            var controller = context.Controller as Controller;
+
+            var pagedResult = new PageEnvelope<object>(
+                total, page, pageSize, context.ActionDescriptor.AttributeRouteInfo.Name,
+                content, context.HttpContext.Request , controller.Url);
+
+            context.Result = new OkObjectResult(pagedResult);
         }
     }
 }
