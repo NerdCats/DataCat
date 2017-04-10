@@ -1,6 +1,10 @@
 ﻿namespace DataCat.Core.Entity
 {
-    public class Widget
+    using DataCat.Core.Db;
+    using MongoDB.Bson.Serialization.Attributes;
+
+    [BsonIgnoreExtraElements(true)]
+    public class Widget : DbEntity
     {
         public string FilterId { get; set; }
         public string ConnectionId { get; set; }

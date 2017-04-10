@@ -32,7 +32,7 @@
 
             var result = await this.Collection.Find(x => x.Id == id).FirstOrDefaultAsync();
             if (result == null)
-                throw new EntityNotFoundException(typeof(DataConnection), id);
+                throw new EntityNotFoundException(typeof(Filter), id);
 
             return result;
         }
@@ -44,7 +44,7 @@
 
             var result = await this.Collection.FindOneAndDeleteAsync(x => x.Id == id);
             if (result == null)
-                throw new EntityDeleteException(typeof(DataConnection), id);
+                throw new EntityDeleteException(typeof(Filter), id);
 
             return result;
         }
