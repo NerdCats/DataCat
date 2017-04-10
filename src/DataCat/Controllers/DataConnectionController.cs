@@ -23,7 +23,7 @@
         }
 
         [Authorize]
-        [HttpGet(Name = RouteConstants.GetDataConnectionsRoute)]
+        [HttpGet(Name = RouteConstants.DataConnectionBrowseRoute)]
         [Paginate]
         public IQueryable<DataConnection> Get()
         {
@@ -31,7 +31,7 @@
         }
 
         [Authorize]
-        [HttpGet("{id}", Name = RouteConstants.CreateDataConnectionRoute)]
+        [HttpGet("{id}", Name = RouteConstants.DataConnectionSelfRoute)]
         public async Task<IActionResult> Get(string id)
         {
             var result = await service.Find(id);
@@ -49,7 +49,7 @@
                 return BadRequest(ModelState);
 
             var result = await service.Create(model.ToEntity(this.User.GetUserId()));
-            return Created(Url.Link(RouteConstants.CreateDataConnectionRoute, new { id = result.Id }), result);
+            return Created(Url.Link(RouteConstants.DataConnectionSelfRoute, new { id = result.Id }), result);
         }
 
         [Authorize]

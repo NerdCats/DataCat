@@ -2,12 +2,22 @@
 {
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
+    using DataCat.Core.Services;
+    using Microsoft.AspNetCore.Authorization;
+    using DataCat.Constants;
 
     [Route("api/[controller]")]
     public class WidgetController : Controller
     {
-        // GET: api/values
-        [HttpGet]
+        private IWidgetService service;
+
+        public WidgetController(IWidgetService service)
+        {
+            this.service = service;
+        }
+        
+        [Authorize]
+        [HttpGet(Name = RouteConstants.WidgetBrowseRoute)]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };

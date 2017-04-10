@@ -25,7 +25,7 @@
         }
 
         [Authorize]
-        [HttpGet(Name = RouteConstants.GetFiltersRoute)]
+        [HttpGet(Name = RouteConstants.FilterBrowseRoute)]
         [Paginate]
         public IQueryable<Filter> Get()
         {
@@ -33,7 +33,7 @@
         }
 
         [Authorize]
-        [HttpGet("{id}", Name = RouteConstants.CreateFilterRoute)]
+        [HttpGet("{id}", Name = RouteConstants.FilterSelfRoute)]
         public async Task<IActionResult> Get(string id)
         {
             var result = await service.Find(id);
@@ -50,7 +50,7 @@
                 throw new ApiException("Model error encountered", HttpStatusCode.BadRequest, ModelState);
 
             var result = await service.Create(model.ToEntity(this.User.GetUserId()));
-            return Created(Url.Link(RouteConstants.CreateFilterRoute, new { id = result.Id }), result);
+            return Created(Url.Link(RouteConstants.FilterSelfRoute, new { id = result.Id }), result);
         }
 
         [Authorize]
