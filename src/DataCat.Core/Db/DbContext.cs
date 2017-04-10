@@ -4,13 +4,14 @@
     using System;
     using DataCat.Core.Entity;
 
-    public class DbContext: IDbContext
+    public class DbContext : IDbContext
     {
         private MongoClient mongoClient;
         public IMongoDatabase Database { get; private set; }
 
         public IMongoCollection<DataConnection> DataConnectionCollection { get; private set; }
-        public IMongoCollection<Filter> FilterConnection { get; private set; }
+        public IMongoCollection<Filter> FilterCollection { get; private set; }
+        public IMongoCollection<Widget> WidgetCollection { get; private set; }
 
         public DbContext(string connectionString, string databaseName)
         {
@@ -32,7 +33,8 @@
         private void InitiateDataCatCollections()
         {
             DataConnectionCollection = Database.GetCollection<DataConnection>(CollectionNames.DataConnectionCollection);
-            FilterConnection = Database.GetCollection<Filter>(CollectionNames.FilterConnection);
+            FilterCollection = Database.GetCollection<Filter>(CollectionNames.FilterConnection);
+            WidgetCollection = Database.GetCollection<Widget>(CollectionNames.WidgetCollection);
         }
 
         private void InitiateIndexes()

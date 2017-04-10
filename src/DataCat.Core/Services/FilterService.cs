@@ -13,7 +13,7 @@
 
         public FilterService(IDbContext dbContext)
         {
-            this.Collection = dbContext.FilterConnection;
+            this.Collection = dbContext.FilterCollection;
         }
 
         public async Task<Filter> Create(Filter filter)
