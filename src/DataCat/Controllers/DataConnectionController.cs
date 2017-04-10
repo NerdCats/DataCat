@@ -67,7 +67,7 @@
 
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateResult([FromRoute]string id, [FromBody]DataConnectionModel model)
+        public async Task<IActionResult> Update([FromRoute]string id, [FromBody]DataConnectionModel model)
         {
             if (model == null || !ModelState.IsValid)
                 return BadRequest(ModelState);
