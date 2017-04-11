@@ -13,6 +13,7 @@
     using DataCat.Core.Exception;
     using System.Net;
     using Newtonsoft.Json.Linq;
+    using DataCat.Core.Model;
 
     [Route("api/[controller]")]
     public class WidgetController : Controller
@@ -23,7 +24,7 @@
         {
             this.service = service;
         }
-        
+
         [Authorize]
         [HttpGet(Name = RouteConstants.WidgetBrowseRoute)]
         [Paginate]
@@ -47,20 +48,18 @@
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]Widget widget)
+        public async Task<IActionResult> Post([FromBody]WidgetModel widget)
         {
             if (widget == null || !ModelState.IsValid)
                 throw new ApiException("Model error encountered", HttpStatusCode.BadRequest, ModelState);
 
-            widget.User = this.User.GetUserId();
-
-            var result = await service.Create(widget);
+            var result = await service.Create(widget.ToEntity(this.User.GetUserId()));
             return Created(Url.Link(RouteConstants.WidgetSelfRoute, new { id = result.Id }), result);
         }
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute]string id, [FromBody]Widget model)
+        public async Task<IActionResult> Update([FromRoute]string id, [FromBody]WidgetModel model)
         {
             if (model == null || !ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -69,7 +68,8 @@
             if (widget.User != this.User.GetUserId())
                 return Unauthorized();
 
-            var result = await service.Update(widget);
+            // INFO: I know this is bad, may be the model should have id's anyway.
+            var result = await service.Update(model.ToEntity(id, this.User.GetUserId()));
             return Ok(result);
         }
 
