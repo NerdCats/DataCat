@@ -34,9 +34,9 @@
             {
                 FilterId = this.FilterId,
                 CollectionName = this.CollectionName,
-                Config = this.Config.ToBsonDocument(),
+                Config = BsonDocument.Parse(this.Config.ToString()),
                 ConnectionId = this.ConnectionId,
-                DataMap = this.Config.ToBsonDocument(),
+                DataMap = BsonDocument.Parse(this.DataMap.ToString()),
                 Type = this.Type,
                 User = userId
             };
