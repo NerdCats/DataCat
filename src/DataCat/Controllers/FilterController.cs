@@ -29,7 +29,7 @@
         [Paginate]
         public IQueryable<Filter> Get()
         {
-            return service.Collection.AsQueryable();
+            return service.Collection.AsQueryable().Where(x => x.User == this.User.GetUserId());
         }
 
         [Authorize]

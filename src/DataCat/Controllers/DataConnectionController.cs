@@ -27,7 +27,7 @@
         [Paginate]
         public IQueryable<DataConnection> Get()
         {
-            return service.Collection.AsQueryable();
+            return service.Collection.AsQueryable().Where(x => x.User == this.User.GetUserId());
         }
 
         [Authorize]

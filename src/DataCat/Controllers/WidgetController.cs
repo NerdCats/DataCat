@@ -31,7 +31,7 @@
         public IQueryable<Widget> Get()
         {
             // Not sure to be honest, since this will serve out the entities, not the models, but meh..
-            return service.Collection.AsQueryable();
+            return service.Collection.AsQueryable().Where(x => x.User == this.User.GetUserId());
         }
 
 
