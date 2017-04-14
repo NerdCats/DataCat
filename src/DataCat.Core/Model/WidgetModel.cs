@@ -29,6 +29,8 @@
 
         public JObject Config { get; set; }
 
+        public string User { get; set; }
+
         public Widget ToEntity(string userId)
         {
             if (string.IsNullOrWhiteSpace(userId))
@@ -68,7 +70,8 @@
                 ConnectionId = widget.ConnectionId,
                 DataMap = JObject.Parse(widget.DataMap.ToJson()),
                 FilterId = widget.FilterId,
-                Type = widget.Type
+                Type = widget.Type,
+                User = widget.User
             };
         }
 
