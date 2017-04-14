@@ -15,7 +15,6 @@
         [Required(AllowEmptyStrings = false, ErrorMessage = "Widgets missing in model")]
         public List<DashboardWidget> Widgets { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "User ref is missing in model")]
         public string User { get; set; }
     }
 }

@@ -49,6 +49,7 @@
             if (dashboard == null || !ModelState.IsValid)
                 throw new ApiException("Model error encountered", HttpStatusCode.BadRequest, ModelState);
 
+            dashboard.User = this.User.GetUserId();
             var result = await service.Create(dashboard);
             return Created(Url.Link(RouteConstants.DashboardSelfRoute, new { id = result.Id }), result);
         }
