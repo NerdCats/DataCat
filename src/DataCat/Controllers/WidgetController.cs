@@ -12,17 +12,18 @@
     using DataCat.Core.Utility;
     using DataCat.Core.Exception;
     using System.Net;
-    using Newtonsoft.Json.Linq;
     using DataCat.Core.Model;
 
     [Route("api/[controller]")]
     public class WidgetController : Controller
     {
         private IWidgetService service;
+        private IFilterService filterService;
 
-        public WidgetController(IWidgetService service)
+        public WidgetController(IWidgetService service, IFilterService filterService)
         {
             this.service = service;
+            this.filterService = filterService;
         }
 
         [Authorize]
@@ -37,13 +38,21 @@
 
         [Authorize]
         [HttpGet("{id}", Name = RouteConstants.WidgetSelfRoute)]
-        public async Task<IActionResult> Get(string id)
+        public async Task<IActionResult> Get(string id, bool expand = true)
         {
             var result = await service.Find(id);
             if (result.User != this.User.GetUserId())
                 return Unauthorized();
 
-            return Ok(result);
+            if (expand)
+            {
+                var filter = await filterService.Find(result.FilterId);
+                var model = WidgetModel.FromEntity(result);
+                model.Filter = filter;
+                return Ok(model);
+            }
+            else
+                return Ok(result);
         }
 
         [Authorize]

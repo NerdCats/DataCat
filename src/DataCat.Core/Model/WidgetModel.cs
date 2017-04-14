@@ -2,12 +2,16 @@
 {
     using DataCat.Core.Entity;
     using MongoDB.Bson;
+    using MongoDB.Bson.IO;
     using Newtonsoft.Json.Linq;
     using System;
     using System.ComponentModel.DataAnnotations;
 
     public class WidgetModel
     {
+        public string Id { get; set; }
+        public Filter Filter { get; set; }
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "FilterId is required")]
         public string FilterId { get; set; }
 
@@ -52,6 +56,30 @@
             var result = ToEntity(userId);
             result.Id = id;
             return result;
+        }
+
+        public static WidgetModel FromEntity(Widget widget)
+        {
+            return new WidgetModel()
+            {
+                Id = widget.Id,
+                CollectionName = widget.CollectionName,
+                Config = JObject.Parse(widget.Config.ToJson()),
+                ConnectionId = widget.ConnectionId,
+                DataMap = JObject.Parse(widget.DataMap.ToJson()),
+                FilterId = widget.FilterId,
+                Type = widget.Type
+            };
+        }
+
+        public bool ShouldSerializeFilter()
+        {
+            return this.Filter != null;
+        }
+
+        public bool ShouldSerializeId()
+        {
+            return !string.IsNullOrWhiteSpace(this.Id);
         }
     }
 }
