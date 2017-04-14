@@ -9,5 +9,6 @@
         IMongoCollection<DataConnection> DataConnectionCollection { get; }
         IMongoCollection<Filter> FilterCollection { get; }
         IMongoCollection<Widget> WidgetCollection { get; }
+        IMongoCollection<Dashboard> DashboardCollection { get; }
     }
 }

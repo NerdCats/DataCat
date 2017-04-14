@@ -5,5 +5,6 @@
         public const string DataConnectionCollection = "DataConnections";
         public const string FilterConnection = "Filters";
         public const string WidgetCollection = "Widgets";
+        public const string DashboardCollection = "Dashboards";
     }
 }

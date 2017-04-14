@@ -12,6 +12,7 @@
         public IMongoCollection<DataConnection> DataConnectionCollection { get; private set; }
         public IMongoCollection<Filter> FilterCollection { get; private set; }
         public IMongoCollection<Widget> WidgetCollection { get; private set; }
+        public IMongoCollection<Dashboard> DashboardCollection { get; private set; }
 
         public DbContext(string connectionString, string databaseName)
         {
@@ -35,12 +36,15 @@
             DataConnectionCollection = Database.GetCollection<DataConnection>(CollectionNames.DataConnectionCollection);
             FilterCollection = Database.GetCollection<Filter>(CollectionNames.FilterConnection);
             WidgetCollection = Database.GetCollection<Widget>(CollectionNames.WidgetCollection);
+            DashboardCollection = Database.GetCollection<Dashboard>(CollectionNames.DashboardCollection);
         }
 
         private void InitiateIndexes()
         {
-            var indexOptions = new CreateIndexOptions();
-            indexOptions.Unique = true;
+            var indexOptions = new CreateIndexOptions()
+            {
+                Unique = true
+            };
 
             DataConnectionCollection.Indexes.CreateOne(Builders<DataConnection>.IndexKeys.Ascending(x => x.Name), indexOptions);
         }
