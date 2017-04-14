@@ -66,7 +66,7 @@
             return Created(Url.Link(RouteConstants.WidgetSelfRoute, new { id = result.Id }), result);
         }
 
-
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute]string id, [FromBody]WidgetModel model)
         {
@@ -82,6 +82,7 @@
             return Ok(result);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {

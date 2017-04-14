@@ -49,17 +49,17 @@
             return result;
         }
 
-        public async Task<Dashboard> Update(Dashboard connection)
+        public async Task<Dashboard> Update(Dashboard dashboard)
         {
-            if (connection == null)
-                throw new ArgumentNullException(nameof(connection));
+            if (dashboard == null)
+                throw new ArgumentNullException(nameof(dashboard));
 
-            if (string.IsNullOrWhiteSpace(connection.Id))
-                throw new ArgumentNullException(nameof(connection.Id));
+            if (string.IsNullOrWhiteSpace(dashboard.Id))
+                throw new ArgumentNullException(nameof(dashboard.Id));
 
-            var result = await this.Collection.FindOneAndReplaceAsync(x => x.Id == connection.Id, connection);
+            var result = await this.Collection.FindOneAndReplaceAsync(x => x.Id == dashboard.Id, dashboard);
             if (result == null)
-                throw new EntityUpdateException(typeof(Dashboard), connection.Id);
+                throw new EntityUpdateException(typeof(Dashboard), dashboard.Id);
 
             return result;
         }
