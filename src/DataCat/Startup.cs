@@ -54,6 +54,9 @@
             });
 
             services.AddSingleton<IDataConnectionService, DataConnectionService>();
+            services.AddSingleton<IFilterService, FilterService>();
+            services.AddSingleton<IWidgetService, WidgetService>();
+            services.AddSingleton<IDashboardService, DashboardService>();
 
             services.AddMvc(options =>
                 {

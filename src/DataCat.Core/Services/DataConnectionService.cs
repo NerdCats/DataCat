@@ -12,6 +12,7 @@
     public class DataConnectionService : IDataConnectionService
     {
         public IMongoCollection<DataConnection> Collection { get; private set; }
+
         public DataConnectionService(IDbContext dbContext)
         {
             this.Collection = dbContext.DataConnectionCollection;
