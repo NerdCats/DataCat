@@ -16,14 +16,14 @@
         }
 
         public virtual string GeneratePageUrl(
-            string routeName, 
-            long page, 
-            long pageSize, 
+            string routeName,
+            long page,
+            long pageSize,
             HttpRequest request)
         {
             var queryParams = request.Query.ToDictionary(x => x.Key, x => x.Value.ToString());
-            queryParams[PagingQueryParameters.Page] = new List<string>() { page.ToString() };
-            queryParams[PagingQueryParameters.PageSize] = new List<string>() { pageSize.ToString() };
+            queryParams[PagingQueryParameters.Page] = page.ToString();
+            queryParams[PagingQueryParameters.PageSize] = pageSize.ToString();
 
             return urlHelper.Link(routeName, queryParams);
         }
