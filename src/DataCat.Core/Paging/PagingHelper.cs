@@ -21,7 +21,7 @@
             long pageSize, 
             HttpRequest request)
         {
-            var queryParams = request.Query.ToDictionary(x => x.Key, x => x.Value.ToList());
+            var queryParams = request.Query.ToDictionary(x => x.Key, x => x.Value.ToString());
             queryParams[PagingQueryParameters.Page] = new List<string>() { page.ToString() };
             queryParams[PagingQueryParameters.PageSize] = new List<string>() { pageSize.ToString() };
 
