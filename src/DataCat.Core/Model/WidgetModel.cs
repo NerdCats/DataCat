@@ -2,7 +2,6 @@
 {
     using DataCat.Core.Entity;
     using MongoDB.Bson;
-    using MongoDB.Bson.IO;
     using Newtonsoft.Json.Linq;
     using System;
     using System.ComponentModel.DataAnnotations;
