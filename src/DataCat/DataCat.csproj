@@ -4,11 +4,14 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <AssemblyName>DataCat</AssemblyName>
-    <OutputType>Exe</OutputType>
+    <OutputType>exe</OutputType>
     <PackageId>DataCat</PackageId>
     <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;portable-net45+win8</PackageTargetFallback>
     <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
+    <ApplicationIcon />
+    <OutputTypeEx>exe</OutputTypeEx>
+    <StartupObject />
   </PropertyGroup>
 
   <ItemGroup>
