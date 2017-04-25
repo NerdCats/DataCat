@@ -21,6 +21,6 @@
         /// <summary>
         /// mongodb limit variable to limit results
         /// </summary>
-        public int limit { get; set; } = 20;
+        public int limit { get; set; } = 1000;
     }
 }
